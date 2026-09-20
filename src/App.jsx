@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
+import ScrollToTop from "./components/ScrollToTop";
 import {useState } from "react";
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
@@ -34,7 +35,7 @@ export default function App() {
              style={{ "--accent": accent }}>
 
             <Navbar accent={accent} setAccent={setAccent}/>
-
+            <ScrollToTop />
             <Routes>
                 <Route path="/" element={<Home accent={accent}/>}/>
                 <Route path="/home" element={<Home accent={accent}/>}/>

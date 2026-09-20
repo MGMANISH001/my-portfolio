@@ -1,158 +1,221 @@
-import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {FaPython, FaDatabase, FaChartBar, FaBrain, FaCheckCircle, FaFilePdf, FaArrowLeft,} from "react-icons/fa";
+import { CheckCircle } from "lucide-react";
+
+import {
+    FaPython,
+    FaDatabase,
+    FaChartBar
+} from "react-icons/fa";
+
+import { GiBrain } from "react-icons/gi";
+
+// import MovieFeatureImg from "/movierecommendation.png";
+// import MovieDataImg from "/moviedata.png";
+// import MovieRecommendationImg from "/recommendation.png";
+
+import { useRef, useState } from "react";
+import { animate } from "animejs";
+
 
 export default function ProjectMovie({ accent }) {
 
+    const [showDemo, setShowDemo] = useState(false);
+
     const navigate = useNavigate();
-    const [showReport, setShowReport] = useState(false);
 
-    // =========================
-    // TECHNOLOGY DATA
-    // =========================
+    const cardRef = useRef(null);
 
-    const techStack = [
+
+    // =====================================================
+    // PREVIEW CARD HOVER
+    // =====================================================
+
+    const handleHover = () => {
+
+        animate(cardRef.current, {
+            rotate: 0,
+            scale: 1.15,
+            duration: 500,
+            easing: "easeOutQuad",
+        });
+
+    };
+
+
+    const handleLeave = () => {
+
+        animate(cardRef.current, {
+            rotate: 6,
+            scale: 1,
+            duration: 500,
+            easing: "easeOutQuad",
+        });
+
+    };
+
+
+    // =====================================================
+    // TECHNOLOGIES
+    // =====================================================
+
+    const tech = [
+
         {
-            title: "Python",
-            icon: <FaPython />,
-            desc: "Used for data processing, exploratory analysis, and developing the recommendation workflow."
+            name: "Python",
+
+            desc:
+                "Used for data processing, exploratory analysis, and developing the recommendation workflow.",
+
+            icon: <FaPython />
         },
+
         {
-            title: "Machine Learning",
-            icon: <FaBrain />,
-            desc: "Applied recommendation techniques to identify similarities between movies and generate relevant suggestions."
+            name: "Machine Learning",
+
+            desc:
+                "Applied recommendation techniques to identify similarities between movies and generate relevant suggestions.",
+
+            icon: <GiBrain />
         },
+
         {
-            title: "EDA",
-            icon: <FaChartBar />,
-            desc: "Explored movie datasets to understand patterns, attributes, and relationships within the available data."
+            name: "EDA",
+
+            desc:
+                "Explored movie datasets to understand patterns, attributes, and relationships within the available data.",
+
+            icon: <FaChartBar />
         },
+
         {
-            title: "Data Processing",
-            icon: <FaDatabase />,
-            desc: "Prepared and organized movie information to create meaningful inputs for the recommendation system."
+            name: "Data Processing",
+
+            desc:
+                "Prepared and organized movie information to create meaningful inputs for the recommendation system.",
+
+            icon: <FaDatabase />
         }
+
     ];
 
-    // =========================
-    // INNOVATION HIGHLIGHTS
-    // =========================
+
+    // =====================================================
+    // FEATURES
+    // =====================================================
 
     const features = [
+
         {
             title: "Relevant Recommendations",
-            image: "/assets/projects/movie-feature-1.png",
-            desc: "Generates movie suggestions based on similarities between the selected movie and available movie information."
+
+            desc:
+                "Generates movie suggestions based on similarities between the selected movie and available movie information.",
+
+            // image: MovieFeatureImg
         },
+
         {
             title: "Data-Driven Analysis",
-            image: "/assets/projects/movie-feature-2.png",
-            desc: "Uses movie attributes and dataset patterns to identify relationships that support the recommendation process."
+
+            desc:
+                "Uses movie attributes and dataset patterns to identify relationships that support the recommendation process.",
+
+            // image: MovieDataImg
         },
+
         {
             title: "Similarity-Based Results",
-            image: "/assets/projects/movie-feature-3.png",
-            desc: "Compares relevant movie characteristics to produce a focused list of similar movie recommendations."
+
+            desc:
+                "Compares relevant movie characteristics to produce a focused list of similar movie recommendations.",
+
+            // image: MovieRecommendationImg
         }
+
     ];
 
-    // =========================
-    // KEY LEARNINGS
-    // =========================
-
-    const learnings = [
-        "Practical experience with Python-based data analysis",
-        "Understanding movie recommendation techniques",
-        "Working with and preprocessing datasets",
-        "Applying similarity-based recommendation logic",
-        "Improving recommendation relevance through data analysis"
-    ];
-
-    // =========================
-    // CHALLENGES
-    // =========================
-
-    const challenges = [
-        "Cleaning and preparing movie dataset information",
-        "Selecting useful attributes for recommendations",
-        "Generating relevant movie similarities",
-        "Handling inconsistent or incomplete data",
-        "Improving the relevance of recommended results"
-    ];
 
     return (
+
         <div className="px-6 md:px-16 lg:px-24 py-16 max-w-7xl mx-auto space-y-32">
-            {/* ========================HERO==================== */}
+
+
+            {/* =====================================================
+                HERO
+            ===================================================== */}
+
             <section
                 className="relative h-[450px] rounded-2xl overflow-hidden border border-white/10 p-10"
-                style={{
-                    background: "#070414"
-                }}
+                id="movie"
             >
-                {/* Background Image */}
+
+                {/* HERO IMAGE */}
+
                 <img
-                    src="/assets/projects/movie-hero.png"
+                    // src="/movierecommendationhero.png"
                     alt="Movie Recommendation System"
-                    className="absolute inset-0 w-full h-full object-cover opacity-40"
+                    className="absolute inset-0 w-full h-full object-cover opacity-60"
                 />
 
-                {/* Gradient */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#070414] to-transparent"/>
-                {/* Hero Content */}
 
-                <div className="absolute bottom-10 left-10 max-w-xl">
+                {/* OVERLAY */}
+
+                <div className="absolute inset-0 bg-gradient-to-t from-[#070414] to-transparent" />
+
+
+                {/* HERO CONTENT */}
+
+                <div className="absolute bottom-10 left-10 max-w-2xl">
+
                     <span
                         className="text-xs px-3 py-1 rounded-full font-mono"
                         style={{
-                            background: `${accent}20`, color: accent
+                            background: `${accent}20`,
+                            color: accent
                         }}
                     >
                         MACHINE LEARNING PROJECT
                     </span>
 
+
                     <h1 className="text-4xl md:text-6xl font-extrabold mt-4 leading-relaxed tracking-tight">
-                        <span className="md:whitespace-nowrap">Music Recommendation</span>
-                        <br/>
-                        <span style={{color: accent}}>System</span>
+
+                        <span className="md:whitespace-nowrap">
+                            Movie Recommendation
+                        </span>
+
+                        <br />
+
+                        <span style={{ color: accent }}>
+                            System
+                        </span>
+
                     </h1>
 
-                    <p className="text-gray-400 mt-4">
-                        A data-driven movie recommendation system designed to
-                        analyze movie information and suggest relevant titles
-                        based on similarities within the dataset.
+
+                    <p className="text-gray-400 mt-4 leading-relaxed">
+
+                        A data-driven recommendation system designed to analyze
+                        movie information and suggest relevant titles based on
+                        similarities within the dataset.
+
                     </p>
 
+
                     <div className="flex gap-4 mt-6">
-                        {/* Project Demo */}
+
                         <button
-                            onClick={() => {
-                                // Add your demo action here if you have one
-                            }}
+                            onClick={() => setShowDemo(true)}
                             className="text-black font-semibold transition px-6 py-3 rounded-lg shadow-lg transform hover:scale-105"
-                            style={{ background: accent, boxShadow: `0 5px 20px ${accent}40` }}
-                        >
-                            🎬 Project Demo
-                        </button>
-
-                        {/* Case Study */}
-
-                        <button
-                            onClick={() => setShowReport(true)}
-                            className="px-5 py-2.5 rounded-lg border flex items-center gap-2 transition-all duration-300 hover:-translate-y-1"
                             style={{
-                                borderColor: `${accent}80`,
-                                color: accent
+                                background: accent,
+                                boxShadow: `0 5px 20px ${accent}40`
                             }}
                         >
-                            <FaFilePdf/>
-                            Case Study
+                            🎥 Project Demo
                         </button>
 
                     </div>
-
-                    <p className="text-gray-500 text-xs mt-3">
-                        Includes data analysis, recommendation logic & implementation
-                    </p>
 
                 </div>
 
@@ -160,101 +223,115 @@ export default function ProjectMovie({ accent }) {
 
 
             {/* =====================================================
-                CHALLENGE + QUICK STATS
+                CHALLENGE
             ===================================================== */}
 
             <section className="grid md:grid-cols-3 gap-10 items-start">
-                {/* Challenge */}
+
+
+                {/* LEFT CONTENT */}
+
                 <div className="md:col-span-2">
-                    <p className=" font-mono text-xs mb-3 tracking-widest font-semibold" style={{ color: accent }}>
+
+                    <p
+                        className="font-mono text-xs mb-3 tracking-widest font-semibold"
+                        style={{ color: accent }}
+                    >
                         INTRODUCTION
                     </p>
+
 
                     <h2 className="text-3xl font-bold mb-12">
                         The Challenge
                     </h2>
 
+
                     <p className="text-gray-400 text-sm leading-relaxed">
+
                         With a large number of movies available across different
                         platforms, finding relevant content can become difficult.
-                        The challenge was to build a recommendation system that
-                        could analyze movie information and identify titles with
-                        similar characteristics.
+                        The main challenge was to build a recommendation system
+                        that could analyze movie information and identify titles
+                        with similar characteristics.
+
                     </p>
 
+
                     <p className="text-gray-400 text-sm mt-4 leading-relaxed">
-                        The project focused on preparing the available dataset,
+
+                        The project involved preparing the available dataset,
                         understanding useful movie attributes, and developing
                         recommendation logic capable of producing relevant
                         suggestions for a selected movie.
+
                     </p>
 
+
                     <p className="text-gray-400 text-sm mt-4 leading-relaxed">
-                        The goal was to create a simple and understandable
+
+                        The objective was to create a simple and understandable
                         recommendation workflow while gaining practical
                         experience with data analysis and machine-learning
                         concepts.
+
                     </p>
 
                 </div>
 
 
-                {/* Quick Stats */}
+                {/* QUICK STATS */}
 
-                <div
-                    className="p-6 rounded-xl border"
-                    style={{
-                        background: `${accent}08`,
-                        borderColor: `${accent}30`
-                    }}
-                >
+                <div className="bg-[#0f172a] border border-white/10 p-6 rounded-xl">
 
-                    <h3 className="mb-5 font-semibold text-lg">
+                    <h3 className="mb-6 font-bold leading-relaxed tracking-wide">
                         Quick Stats
                     </h3>
 
-                    <div className="space-y-5 text-sm">
 
-                        <div>
-                            <p className="text-xs text-gray-500 uppercase">
-                                Role
-                            </p>
-                            <p className="text-gray-300 mt-1">
-                                Developer
-                            </p>
-                        </div>
+                    <ul className="text-xs text-gray-400 space-y-6 font-mono">
 
-                        <div>
-                            <p className="text-xs text-gray-500 uppercase">
-                                Project Type
-                            </p>
-                            <p className="text-gray-300 mt-1">
-                                Machine Learning
-                            </p>
-                        </div>
+                        <li>
+                            ROLE
+                        </li>
 
-                        <div>
-                            <p className="text-xs text-gray-500 uppercase">
-                                Technologies
-                            </p>
-                            <p className="text-gray-300 mt-1">
-                                Python · ML · EDA
-                            </p>
-                        </div>
+                        <span className="text-white text-sm font-semibold font-sans">
+                            Developer
+                        </span>
 
-                        <div>
-                            <p className="text-xs text-gray-500 uppercase">
-                                Focus
-                            </p>
-                            <p
-                                className="mt-1"
-                                style={{color: accent}}
-                            >
-                                Movie Recommendations
-                            </p>
-                        </div>
 
-                    </div>
+                        <li>
+                            TYPE
+                        </li>
+
+                        <span className="text-white text-sm font-semibold font-sans">
+                            Machine Learning Project
+                        </span>
+
+
+                        <li>
+                            TECHNOLOGIES
+                        </li>
+
+                        <span className="text-white text-sm font-semibold font-sans">
+                            Python · ML · EDA
+                        </span>
+
+
+                        <li className="flex-1 h-[1px] bg-white/10"></li>
+
+
+                        <li>
+                            FOCUS
+                        </li>
+
+                        <span
+                            className="text-sm font-semibold font-sans"
+                            style={{ color: accent }}
+                        >
+                            ● Movie Recommendations
+                        </span>
+
+                    </ul>
 
                 </div>
 
@@ -267,50 +344,72 @@ export default function ProjectMovie({ accent }) {
 
             <section>
 
-                <div className="text-center mb-10">
-
-                    <p
-                        className="text-xs tracking-wider mb-2"
-                        style={{color: accent}}
-                    >
-                        THE ENGINE
-                    </p>
-
-                    <h2 className="text-2xl md:text-3xl font-semibold">
-                        Technological Foundation
-                    </h2>
-
-                </div>
+                <p
+                    className="text-xs mb-3 text-center font-mono tracking-widest font-semibold"
+                    style={{ color: accent }}
+                >
+                    THE ENGINE
+                </p>
 
 
-                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <h2 className="text-3xl font-bold mb-12 text-center">
+                    Technological Foundation
+                </h2>
 
-                    {techStack.map((tech, i) => (
+
+                <div className="grid md:grid-cols-4 gap-6">
+
+                    {tech.map((item, i) => (
 
                         <div
                             key={i}
-                            className="group bg-[#0f172a] border border-white/10 p-5 rounded-xl transition-all duration-300 hover:-translate-y-2"
+                            className="h-full relative bg-[#0f172a]/80 backdrop-blur-md border border-white/10 p-5 rounded-2xl transition-all duration-300 hover:shadow-[0_10px_40px_rgba(0,0,0,0.5)] group"
+
                             style={{
-                                borderColor: `${accent}25`
+                                borderColor: accent + "30"
+                            }}
+
+                            onMouseEnter={(e) => {
+
+                                e.currentTarget.style.borderColor = accent;
+
+                                e.currentTarget.style.boxShadow =
+                                    `0 0 25px ${accent}55`;
+
+                            }}
+
+                            onMouseLeave={(e) => {
+
+                                e.currentTarget.style.borderColor =
+                                    accent + "30";
+
+                                e.currentTarget.style.boxShadow =
+                                    "none";
+
                             }}
                         >
 
                             <div
-                                className="w-11 h-11 rounded-lg flex items-center justify-center mb-5 text-xl transition-all duration-300 group-hover:scale-110"
+                                className="w-12 h-12 flex items-center justify-center rounded-xl mb-4 transition-all group-hover:scale-110"
+
                                 style={{
                                     color: accent,
-                                    background: `${accent}15`
+                                    background: accent + "15"
                                 }}
                             >
-                                {tech.icon}
+
+                                {item.icon}
+
                             </div>
 
+
                             <h4 className="font-semibold">
-                                {tech.title}
+                                {item.name}
                             </h4>
 
-                            <p className="text-gray-400 text-sm mt-2 leading-relaxed">
-                                {tech.desc}
+
+                            <p className="text-gray-400 text-sm mt-2 tracking-wide">
+                                {item.desc}
                             </p>
 
                         </div>
@@ -329,51 +428,54 @@ export default function ProjectMovie({ accent }) {
             <section>
 
                 <p
-                    className="text-xs tracking-wider mb-2"
-                    style={{color: accent}}
+                    className="text-xs mb-3 font-mono tracking-widest font-semibold"
+                    style={{ color: accent }}
                 >
                     CORE CAPABILITIES
                 </p>
 
-                <h2 className="text-2xl md:text-3xl font-semibold mb-8">
+
+                <h2 className="text-3xl font-bold mb-12">
                     Innovation Highlights
                 </h2>
 
 
-                <div className="grid md:grid-cols-3 gap-6">
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-                    {features.map((feature, i) => (
+                    {features.map((f, i) => (
 
                         <div
                             key={i}
                             className="group"
                         >
 
-                            {/* Image */}
+                            {/* IMAGE */}
 
-                            <div className="overflow-hidden rounded-xl border border-white/10">
+                            <div className="relative h-44 overflow-hidden transition-all w-full mb-4">
 
                                 <img
-                                    src={feature.image}
-                                    alt={feature.title}
-                                    className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
+                                    src={f.image}
+                                    alt={f.title}
+                                    className="absolute inset-0 w-full h-48 object-cover transition-transform duration-500 rounded-xl group-hover:scale-105 border"
+
+                                    style={{
+                                        borderColor: accent + "30"
+                                    }}
                                 />
 
                             </div>
 
-                            {/* Content */}
 
-                            <div className="mt-5">
+                            {/* TEXT */}
 
-                                <h3 className="text-lg font-semibold">
-                                    {feature.title}
-                                </h3>
+                            <h4 className="font-bold text-xl text-white mb-2 p-1 leading-relaxed">
+                                {f.title}
+                            </h4>
 
-                                <p className="text-gray-400 text-sm mt-3 leading-relaxed">
-                                    {feature.desc}
-                                </p>
 
-                            </div>
+                            <p className="text-gray-400 text-sm p-1 leading-relaxed">
+                                {f.desc}
+                            </p>
 
                         </div>
 
@@ -388,255 +490,465 @@ export default function ProjectMovie({ accent }) {
                 EXECUTION & ARCHITECTURE
             ===================================================== */}
 
-            <section className="grid md:grid-cols-2 gap-10 items-center">
+            <section className="relative grid md:grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+
+
+                {/* GLOW */}
+
+                <div
+                    className="absolute top-[-100px] left-[-150px] w-[500px] h-[500px] blur-[100px] opacity-25 pointer-events-none"
+
+                    style={{
+                        background:
+                            `radial-gradient(ellipse, ${accent} 0%, transparent 65%)`
+                    }}
+                />
+
+
+                {/* CONTENT */}
 
                 <div>
 
                     <p
-                        className="text-xs tracking-wider mb-2"
-                        style={{color: accent}}
+                        className="text-xs mb-3 font-mono tracking-widest font-semibold"
+                        style={{ color: accent }}
                     >
                         IMPLEMENTATION
                     </p>
 
-                    <h2 className="text-2xl md:text-3xl font-semibold mb-6">
+
+                    <h2 className="text-3xl font-semibold mb-12">
                         Execution & Architecture
                     </h2>
 
+
                     <p className="text-gray-400 text-sm leading-relaxed">
+
                         The system was developed using Python with a focus on
                         data preparation, exploratory analysis, and recommendation
                         logic. The movie dataset was first examined to understand
                         its structure and identify useful attributes.
+
                     </p>
 
+
                     <p className="text-gray-400 text-sm mt-4 leading-relaxed">
+
                         After preparing the data, relevant movie characteristics
                         were processed to determine relationships between titles.
                         The recommendation workflow then used these similarities
                         to generate a focused list of related movies.
+
                     </p>
+
 
                     <p className="text-gray-400 text-sm mt-4 leading-relaxed">
-                        The project provided practical experience in transforming
-                        raw data into useful recommendations while keeping the
-                        overall workflow organized and easy to improve.
+
+                        The system was organized into separate data-processing
+                        and recommendation stages, making the workflow easier
+                        to understand, debug, and improve.
+
                     </p>
 
                 </div>
 
 
-                {/* Preview */}
+                {/* PREVIEW CARD */}
 
-                <div
-                    className="relative h-[300px] rounded-xl overflow-hidden border"
-                    style={{
-                        borderColor: `${accent}30`,
-                        background: "#0f172a"
-                    }}
-                >
+                <div className="flex justify-center items-center">
 
-                    <img
-                        src="/assets/projects/movie-preview.png"
-                        alt="Movie recommendation system preview"
-                        className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                    />
+                    <div className="relative group">
 
-                    <div
-                        className="absolute top-4 left-4 px-3 py-1 rounded-md text-xs font-semibold"
-                        style={{
-                            background: accent,
-                            color: "#000"
-                        }}
-                    >
-                        PREVIEW
-                    </div>
+                        {/* GLOW */}
 
-                </div>
+                        <div
+                            className="absolute -inset-[2px] rounded-3xl blur-md opacity-40"
 
-            </section>
+                            style={{
+                                background:
+                                    `linear-gradient(135deg, ${accent}, transparent)`
+                            }}
+                        />
 
 
-            {/* =====================================================
-                KEY LEARNINGS + CHALLENGES
-            ===================================================== */}
+                        {/* CARD */}
 
-            <section className="grid md:grid-cols-2 gap-8">
+                        <div
+                            ref={cardRef}
 
-                {/* Learnings */}
+                            onMouseEnter={handleHover}
+                            onMouseLeave={handleLeave}
 
-                <div
-                    className="p-6 rounded-xl border"
-                    style={{
-                        background: `${accent}08`,
-                        borderColor: `${accent}50`
-                    }}
-                >
+                            className="relative w-full h-full rounded-3xl flex items-center justify-center border border-white/10 backdrop-blur-xl transition-all"
 
-                    <h3
-                        className="text-xl font-semibold mb-6"
-                        style={{color: accent}}
-                    >
-                        Key Learnings
-                    </h3>
+                            style={{
+                                background:
+                                    `linear-gradient(135deg, ${accent}40, #111827)`
+                            }}
+                        >
 
-                    <div className="space-y-4">
+                            <span
+                                className="absolute top-2 left-2 text-xs px-2 py-1 rounded"
 
-                        {learnings.map((item, i) => (
-
-                            <div
-                                key={i}
-                                className="flex items-start gap-3 text-gray-400 text-sm"
+                                style={{
+                                    background: accent,
+                                    color: "#000"
+                                }}
                             >
-                                <FaCheckCircle
-                                    className="mt-0.5 shrink-0"
-                                    style={{color: accent}}
-                                />
-
-                                <span>
-                                    {item}
-                                </span>
-
-                            </div>
-
-                        ))}
-
-                    </div>
-
-                </div>
+                                PREVIEW
+                            </span>
 
 
-                {/* Challenges */}
-
-                <div
-                    className="p-6 rounded-xl border"
-                    style={{
-                        background: `${accent}08`,
-                        borderColor: `${accent}30`
-                    }}
-                >
-
-                    <h3
-                        className="text-xl font-semibold mb-6"
-                        style={{color: accent}}
-                    >
-                        Challenges Faced
-                    </h3>
-
-                    <div className="space-y-4">
-
-                        {challenges.map((item, i) => (
-
-                            <div
-                                key={i}
-                                className="flex items-start gap-3 text-gray-400 text-sm"
-                            >
-                                <FaCheckCircle
-                                    className="mt-0.5 shrink-0"
-                                    style={{color: accent}}
-                                />
-
-                                <span>
-                                    {item}
-                                </span>
-
-                            </div>
-
-                        ))}
-
-                    </div>
-
-                </div>
-
-            </section>
-
-
-            {/* =====================================================
-                NEXT PROJECT
-            ===================================================== */}
-
-            <section
-                className="rounded-2xl p-12 text-center border transition-all duration-300 hover:-translate-y-1"
-                style={{
-                    borderColor: `${accent}30`,
-                    background: `${accent}05`
-                }}
-            >
-
-                <p
-                    className="text-xs tracking-wider mb-3"
-                    style={{color: accent}}
-                >
-                    NEXT PROJECT
-                </p>
-
-                <h2 className="text-3xl md:text-4xl font-bold">
-                    Collaborative Coding{" "}
-                    <span style={{color: accent}}>
-                        Environment
-                    </span>
-                </h2>
-
-                <button
-                    onClick={() => navigate("/project/cce")}
-                    className="mt-5 inline-flex items-center gap-2 font-medium transition-all duration-300 hover:-translate-x-1"
-                    style={{color: accent}}
-                >
-                    <FaArrowLeft/>
-                    Previous Project
-                </button>
-
-            </section>
-
-
-            {/* =====================================================
-                CASE STUDY PDF MODAL
-            ===================================================== */}
-
-            {showReport && (
-
-                <div
-                    className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm px-4"
-                    onClick={() => setShowReport(false)}
-                >
-
-                    <div
-                        className="w-full max-w-3xl bg-[#0f172a] border border-white/10 rounded-2xl p-6"
-                        onClick={(e) => e.stopPropagation()}
-                    >
-
-                        <div className="flex items-center justify-between mb-5">
-
-                            <h2 className="text-xl font-semibold">
-                                Project Report
-                            </h2>
-
-                            <button
-                                onClick={() => setShowReport(false)}
-                                className="text-gray-400 hover:text-white transition"
-                            >
-                                ✕
-                            </button>
-
-                        </div>
-
-
-                        <div className="w-full h-[500px] rounded-xl overflow-hidden bg-black">
-
-                            <iframe
-                                src="/reports/movie-recommendation-report.pdf"
-                                title="Movie Recommendation System Project Report"
-                                className="w-full h-full"
+                            <img
+                                // src="/movie-preview.png"
+                                alt="Movie Recommendation System Preview"
+                                className="w-full p-3 h-full object-cover rounded-3xl"
                             />
 
                         </div>
 
+                    </div>
 
-                        <div className="flex justify-end mt-5">
+                </div>
+
+            </section>
+
+
+            {/* =====================================================
+                LEARNINGS + CHALLENGES
+            ===================================================== */}
+
+            <section className="grid md:grid-cols-2 gap-8 mt-12">
+
+
+                {/* KEY LEARNINGS */}
+
+                <div
+                    className="bg-white/5 border border-white/10 rounded-xl p-6 backdrop-blur-md transition-all duration-300 hover:shadow-[0_0_25px_rgba(168,85,247,0.2)]"
+
+                    style={{
+                        borderColor: accent + "30"
+                    }}
+
+                    onMouseEnter={(e) => {
+
+                        e.currentTarget.style.borderColor = accent;
+
+                        e.currentTarget.style.boxShadow =
+                            `0 0 25px ${accent}55`;
+
+                    }}
+
+                    onMouseLeave={(e) => {
+
+                        e.currentTarget.style.borderColor =
+                            accent + "30";
+
+                        e.currentTarget.style.boxShadow =
+                            "none";
+
+                    }}
+                >
+
+                    <h2
+                        className="text-xl font-semibold mb-4"
+                        style={{ color: accent }}
+                    >
+                        Key Learnings
+                    </h2>
+
+
+                    <ul className="space-y-3">
+
+
+                        <li className="flex items-start gap-3">
+
+                            <CheckCircle
+                                size={16}
+                                style={{ color: accent }}
+                            />
+
+                            <span className="text-gray-400 text-sm">
+                                Practical experience with Python-based data analysis
+                            </span>
+
+                        </li>
+
+
+                        <li className="flex items-start gap-3">
+
+                            <CheckCircle
+                                size={16}
+                                style={{ color: accent }}
+                            />
+
+                            <span className="text-gray-400 text-sm">
+                                Understanding movie recommendation techniques
+                            </span>
+
+                        </li>
+
+
+                        <li className="flex items-start gap-3">
+
+                            <CheckCircle
+                                size={16}
+                                style={{ color: accent }}
+                            />
+
+                            <span className="text-gray-400 text-sm">
+                                Working with and preprocessing datasets
+                            </span>
+
+                        </li>
+
+
+                        <li className="flex items-start gap-3">
+
+                            <CheckCircle
+                                size={16}
+                                style={{ color: accent }}
+                            />
+
+                            <span className="text-gray-400 text-sm">
+                                Applying similarity-based recommendation logic
+                            </span>
+
+                        </li>
+
+
+                        <li className="flex items-start gap-3">
+
+                            <CheckCircle
+                                size={16}
+                                style={{ color: accent }}
+                            />
+
+                            <span className="text-gray-400 text-sm">
+                                Improving recommendation relevance through data analysis
+                            </span>
+
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                {/* CHALLENGES */}
+
+                <div
+                    className="bg-white/5 border border-white/10 rounded-xl p-6 backdrop-blur-md transition duration-300 hover:shadow-[0_0_25px_rgba(168,85,247,0.2)]"
+
+                    style={{
+                        borderColor: accent + "30"
+                    }}
+
+                    onMouseEnter={(e) => {
+
+                        e.currentTarget.style.borderColor = accent;
+
+                        e.currentTarget.style.boxShadow =
+                            `0 0 25px ${accent}55`;
+
+                    }}
+
+                    onMouseLeave={(e) => {
+
+                        e.currentTarget.style.borderColor =
+                            accent + "30";
+
+                        e.currentTarget.style.boxShadow =
+                            "none";
+
+                    }}
+                >
+
+                    <h2
+                        className="text-xl font-semibold mb-4"
+                        style={{ color: accent }}
+                    >
+                        Challenges Faced
+                    </h2>
+
+
+                    <ul className="space-y-3">
+
+
+                        <li className="flex items-start gap-3">
+
+                            <CheckCircle
+                                size={16}
+                                style={{ color: accent }}
+                            />
+
+                            <span className="text-gray-400 text-sm">
+                                Cleaning and preparing movie dataset information
+                            </span>
+
+                        </li>
+
+
+                        <li className="flex items-start gap-3">
+
+                            <CheckCircle
+                                size={16}
+                                style={{ color: accent }}
+                            />
+
+                            <span className="text-gray-400 text-sm">
+                                Selecting useful attributes for recommendations
+                            </span>
+
+                        </li>
+
+
+                        <li className="flex items-start gap-3">
+
+                            <CheckCircle
+                                size={16}
+                                style={{ color: accent }}
+                            />
+
+                            <span className="text-gray-400 text-sm">
+                                Generating relevant movie similarities
+                            </span>
+
+                        </li>
+
+
+                        <li className="flex items-start gap-3">
+
+                            <CheckCircle
+                                size={16}
+                                style={{ color: accent }}
+                            />
+
+                            <span className="text-gray-400 text-sm">
+                                Handling inconsistent or incomplete data
+                            </span>
+
+                        </li>
+
+
+                        <li className="flex items-start gap-3">
+
+                            <CheckCircle
+                                size={16}
+                                style={{ color: accent }}
+                            />
+
+                            <span className="text-gray-400 text-sm">
+                                Improving the relevance of recommended results
+                            </span>
+
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </section>
+
+
+            {/* =====================================================
+                NEXT / PREVIOUS PROJECT
+            ===================================================== */}
+
+            <section className="relative rounded-2xl p-12 text-center border border-white/10 overflow-hidden">
+
+                <img
+                    src="/src/assets/nextproject.png"
+                    alt=""
+                    className="absolute inset-0 w-full h-full object-cover"
+                />
+
+
+                <div className="absolute inset-0 bg-black/70" />
+
+                <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent" />
+
+
+                <div className="relative z-10">
+
+                    <p
+                        className="text-xs mb-2"
+                        style={{ color: accent }}
+                    >
+                        PROJECT NAVIGATION
+                    </p>
+
+
+                    <h2 className="text-3xl font-bold">
+
+                        2D Multiplayer{" "}
+
+                        <span style={{ color: accent }}>
+                            Game
+                        </span>
+
+                    </h2>
+
+
+                    <div className="flex justify-center mt-4">
+
+                        <button
+                            onClick={() => navigate("/project/game")}
+                            className="text-sm font-medium flex items-center gap-2 group"
+                            style={{ color: accent }}
+                        >
+
+                            <span className="group-hover:-translate-x-1 transition-transform">
+                                ←
+                            </span>
+
+                            Previous Project
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            {/* =====================================================
+                PROJECT DEMO MODAL
+            ===================================================== */}
+
+            {showDemo && (
+
+                <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50">
+
+
+                    <div className="bg-[#0f172a] p-8 rounded-xl w-[500px] border border-white/10">
+
+                        <h2 className="text-xl font-semibold mb-4">
+                            Project Demo
+                        </h2>
+
+
+                        <div className="bg-black h-[200px] rounded-lg flex items-center justify-center text-gray-400 text-center px-6">
+
+                            Interactive recommendation demo
+                            available locally.
+
+                            <br />
+                            <br />
+
+                            The project demonstrates movie data
+                            processing and similarity-based
+                            recommendation logic.
+
+                        </div>
+
+
+                        <div className="flex justify-end mt-6">
 
                             <button
-                                onClick={() => setShowReport(false)}
-                                className="px-5 py-2 border border-white/20 rounded-lg hover:bg-white/5 transition"
+                                onClick={() => setShowDemo(false)}
+                                className="px-4 py-2 border border-white/20 rounded-lg"
                             >
                                 Close
                             </button>
@@ -650,5 +962,7 @@ export default function ProjectMovie({ accent }) {
             )}
 
         </div>
+
     );
+
 }
