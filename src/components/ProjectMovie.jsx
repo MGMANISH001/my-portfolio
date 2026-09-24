@@ -9,9 +9,9 @@ import {
 
 import { GiBrain } from "react-icons/gi";
 
-// import MovieFeatureImg from "/movierecommendation.png";
-// import MovieDataImg from "/moviedata.png";
-// import MovieRecommendationImg from "/recommendation.png";
+import MovieFeatureImg from "/relevant-recommendations.png";
+import MovieDataImg from "/data-driven-analysis.png";
+import MovieRecommendationImg from "/similarity-based-results.png";
 
 import { useRef, useState } from "react";
 import { animate } from "animejs";
@@ -111,7 +111,7 @@ export default function ProjectMovie({ accent }) {
             desc:
                 "Generates movie suggestions based on similarities between the selected movie and available movie information.",
 
-            // image: MovieFeatureImg
+            image: MovieFeatureImg
         },
 
         {
@@ -120,7 +120,7 @@ export default function ProjectMovie({ accent }) {
             desc:
                 "Uses movie attributes and dataset patterns to identify relationships that support the recommendation process.",
 
-            // image: MovieDataImg
+            image: MovieDataImg
         },
 
         {
@@ -129,7 +129,7 @@ export default function ProjectMovie({ accent }) {
             desc:
                 "Compares relevant movie characteristics to produce a focused list of similar movie recommendations.",
 
-            // image: MovieRecommendationImg
+            image: MovieRecommendationImg
         }
 
     ];
@@ -151,11 +151,15 @@ export default function ProjectMovie({ accent }) {
 
                 {/* HERO IMAGE */}
 
-                <img
-                    // src="/movierecommendationhero.png"
-                    alt="Movie Recommendation System"
+                <video
+                    autoPlay
+                    loop = {true}
+                    muted = {true}
+                    playsInline
                     className="absolute inset-0 w-full h-full object-cover opacity-60"
-                />
+                >
+                    <source src="/src/assets/cosmic-cinema-loop_v2.mp4" type="video/mp4" />
+                </video>
 
 
                 {/* OVERLAY */}
@@ -553,63 +557,134 @@ export default function ProjectMovie({ accent }) {
                 </div>
 
 
-                {/* PREVIEW CARD */}
-
+                {/* 🎬 MOVIE RECOMMENDATION UI */}
                 <div className="flex justify-center items-center">
-
                     <div className="relative group">
 
                         {/* GLOW */}
-
                         <div
                             className="absolute -inset-[2px] rounded-3xl blur-md opacity-40"
-
                             style={{
-                                background:
-                                    `linear-gradient(135deg, ${accent}, transparent)`
+                                background: `linear-gradient(135deg, ${accent}, transparent)`
                             }}
                         />
 
-
-                        {/* CARD */}
-
+                        {/* PREVIEW CARD */}
                         <div
                             ref={cardRef}
-
                             onMouseEnter={handleHover}
                             onMouseLeave={handleLeave}
-
-                            className="relative w-full h-full rounded-3xl flex items-center justify-center border border-white/10 backdrop-blur-xl transition-all"
-
+                            className="relative w-[320px] h-[320px] rounded-3xl flex items-center justify-center border border-white/10 backdrop-blur-md transition-all duration-500 group overflow-visible"
                             style={{
-                                background:
-                                    `linear-gradient(135deg, ${accent}40, #111827)`
+                                background: `linear-gradient(135deg, ${accent}40, #111827)`
                             }}
                         >
 
-                            <span
-                                className="absolute top-2 left-2 text-xs px-2 py-1 rounded"
+                            {/* TOP PREVIEW LABEL */}
+                            <div className="absolute -top-8 left-1/2 -translate-x-1/2 flex items-center gap-2 px-3 py-1.5
+                            rounded-full bg-[#17132b]/90 border border-white/10
+                            shadow-lg rotate-2 z-10 whitespace-nowrap">
 
-                                style={{
-                                    background: accent,
-                                    color: "#000"
-                                }}
-                            >
-                                PREVIEW
-                            </span>
+                        <span className="px-2 py-1 rounded text-[8px] font-bold text-black"
+                        style={{ background: `${accent}20`, color: accent  }}>
+                            PREVIEW
+                        </span>
+
+                                <span className="text-[10px] text-gray-300">Recommendation System
+                                </span>
+
+                            </div>
+
+                            {/* INNER MOVIE UI */}
+                            <div className="w-full h-full rounded-2xl bg-[#090712]/90 border border-white/10 p-3 shadow-2xl">
+
+                                {/* HEADER */}
+                                <div className="flex items-center justify-between mb-4">
+
+                                    <div>
+                                        <p className="text-[10px] text-gray-500">
+                                            RECOMMENDATIONS
+                                        </p>
+
+                                        <p className="text-sm font-semibold text-white">
+                                            For You
+                                        </p>
+                                    </div>
+
+                                    <div
+                                        className="w-7 h-7 rounded-lg flex items-center justify-center"
+                                        style={{
+                                            backgroundColor: `${accent}25`,
+                                            color: accent
+                                        }}
+                                    >
+                                        ✦
+                                    </div>
+
+                                </div>
 
 
-                            <img
-                                // src="/movie-preview.png"
-                                alt="Movie Recommendation System Preview"
-                                className="w-full p-3 h-full object-cover rounded-3xl"
-                            />
+                                <div className="flex gap-2 mb-3">
 
+                                    {[
+                                        "from-purple-500 to-blue-700",
+                                        "from-orange-500 to-red-700",
+                                        "from-blue-500 to-indigo-800"
+                                    ].map((color, i) => (
+
+                                        <div
+                                            key={i}
+                                            className={`w-[60px] h-[65px] rounded-lg
+                      bg-gradient-to-br ${color}
+                      flex items-center justify-center
+                      text-lg border border-white/10`}
+                                        >
+                                            {["🚀", "🎬", "🦇"][i]}
+                                        </div>
+
+                                    ))}
+
+                                </div>
+
+
+                                <div className="space-y-1.5">
+
+                                    {[1, 2, 3].map((_, i) => (
+
+                                        <div
+                                            key={i}
+                                            className="flex items-center gap-2
+                     h-[28px] px-2 rounded-md
+                     bg-white/[0.04]"
+                                        >
+
+                                            <div
+                                                className="w-5 h-5 rounded bg-purple-600/60"
+                                            />
+
+                                            <div className="flex-1">
+                                                <div className="w-12 h-1 rounded bg-white/20" />
+                                                <div className="w-8 h-1 mt-1 rounded bg-white/10" />
+                                            </div>
+
+                                            <span
+                                                className="text-[8px]"
+                                                style={{ color: accent }}
+                                            >
+            ★★★★
+          </span>
+
+                                        </div>
+
+                                    ))}
+
+                                </div>
+
+                            </div>
                         </div>
 
+                        </div>
                     </div>
-
-                </div>
 
             </section>
 

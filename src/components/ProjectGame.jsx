@@ -156,9 +156,9 @@ export default function ProjectGame({ accent }) {
                     <h3 className="mb-6 font-bold leading-relaxed tracking-wide">Quick Stats</h3>
 
                     <ul className="text-xs text-gray-400 space-y-6 font-mono">
-                        <li className="">ROLE </li> <span className="text-white text-sm font-semibold font-sans">Game Developer</span>
-                        <li className="">TIMELINE </li><span className="text-white text-sm font-semibold font-sans">2-3 Months</span>
-                        <li className="">TYPE </li><span className="text-white text-sm font-semibold font-sans">Personal Project</span>
+                        <li className="">ROLE </li> <span className="text-white text-sm font-semibold font-sans">Developer</span>
+                        <li className="">TYPE </li><span className="text-white text-sm font-semibold font-sans">Game Development Project</span>
+                        <li className="">TECHNOLOGIES </li><span className="text-white text-sm font-semibold font-sans">Unity · C#</span>
                         <li className="flex-1 h-[1px] bg-white/10"></li>
                         <li className="">PLATFORM </li><span className="text-white text-sm font-semibold font-sans" style={{color: accent}}>● Offline Multiplayer</span>
                     </ul>
@@ -454,7 +454,7 @@ export default function ProjectGame({ accent }) {
                         UP NEXT
                     </p>
                     <h2 className="text-3xl font-bold">
-                        <span style={{ color: accent }}>Movie</span> Recommendation <span style={{ color: accent }}>System</span>
+                        Movie <span style={{ color: accent }}>Recommendation </span> System
                     </h2>
                     <div className="flex justify-center mt-4 gap-x-96">
                         <button

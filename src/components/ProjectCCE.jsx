@@ -180,8 +180,8 @@ export default function ProjectCCE({ accent }) {
 
                     <ul className="text-xs text-gray-400 space-y-6 font-mono">
                         <li className="">ROLE </li> <span className="text-white text-sm font-semibold font-sans">Frontend Developer</span>
-                        <li className="">TIMELINE </li><span className="text-white text-sm font-semibold font-sans">3 Months</span>
-                        <li className="">TYPE </li><span className="text-white text-sm font-semibold font-sans">Team Project</span>
+                        <li className="">TYPE </li><span className="text-white text-sm font-semibold font-sans">Real time collaborative</span>
+                        <li className="">TECHNOLOGIES </li><span className="text-white text-sm font-semibold font-sans">React · Django REST</span>
                         <li className="flex-1 h-[1px] bg-white/10"></li>
                         <li className="">STATUS </li><span className="text-white text-sm font-semibold font-sans" style={{color: accent}}>● Prototype Completed</span>
                     </ul>
