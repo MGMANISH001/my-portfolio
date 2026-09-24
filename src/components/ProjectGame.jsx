@@ -87,7 +87,7 @@ export default function ProjectGame({ accent }) {
                     playsInline
                     className="absolute inset-0 w-full h-full object-cover opacity-60"
                 >
-                    <source src="/src/assets/7914778-hd_1920_1080_30fps.mp4" type="video/mp4" />
+                    <source src="/7914778-hd_1920_1080_30fps.mp4" type="video/mp4" />
                 </video>
 
                 <div className="absolute inset-0 bg-gradient-to-t from-[#070414] to-transparent"/>
@@ -440,7 +440,7 @@ export default function ProjectGame({ accent }) {
             <section className="relative rounded-2xl p-12 text-center border border-white/10 overflow-hidden">
 
                 <img
-                    src="/src/assets/nextproject.png"
+                    src="/nextproject.png"
                     alt=""
                     className="absolute inset-0 w-full h-full object-cover"
                 />

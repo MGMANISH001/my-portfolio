@@ -99,7 +99,7 @@ export default function ProjectCCE({ accent }) {
                     playsInline
                     className="absolute inset-0 w-full h-full object-cover opacity-60"
                 >
-                    <source src="/src/assets/3130284-uhd_3840_2160_30fps.mp4" type="video/mp4" />
+                    <source src="/3130284-uhd_3840_2160_30fps.mp4" type="video/mp4" />
                 </video>
 
                 <div className="absolute inset-0 bg-gradient-to-t from-[#070414] to-transparent"/>
@@ -445,7 +445,7 @@ export default function ProjectCCE({ accent }) {
             <section className="relative rounded-2xl p-12 text-center border border-white/10 overflow-hidden">
 
                 <img
-                    src="/src/assets/nextproject.png"
+                    src="/nextproject.png"
                     alt=""
                     className="absolute inset-0 w-full h-full object-cover"
                 />

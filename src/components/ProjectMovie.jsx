@@ -158,7 +158,7 @@ export default function ProjectMovie({ accent }) {
                     playsInline
                     className="absolute inset-0 w-full h-full object-cover opacity-60"
                 >
-                    <source src="/src/assets/cosmic-cinema-loop_v2.mp4" type="video/mp4" />
+                    <source src="/cosmic-cinema-loop_v2.mp4" type="video/mp4" />
                 </video>
 
 
@@ -933,7 +933,7 @@ export default function ProjectMovie({ accent }) {
             <section className="relative rounded-2xl p-12 text-center border border-white/10 overflow-hidden">
 
                 <img
-                    src="/src/assets/nextproject.png"
+                    src="/nextproject.png"
                     alt=""
                     className="absolute inset-0 w-full h-full object-cover"
                 />
