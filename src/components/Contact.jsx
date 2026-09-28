@@ -1,14 +1,8 @@
 import { useState } from "react";
-import {
-    FaGithub,
-    FaLinkedin,
-    FaEnvelope,
-    FaMapMarkerAlt,
-    FaPaperPlane
-} from "react-icons/fa";
+import {FaGithub, FaLinkedin, FaEnvelope, FaMapMarkerAlt, FaPaperPlane} from "react-icons/fa";
+
 
 export default function Contact({ accent }) {
-
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -42,18 +36,17 @@ export default function Contact({ accent }) {
     return (
         <section
             id="contact"
-            className="relative px-6 md:px-12 lg:px-20 pt-20 pb-24 overflow-hidden"
+            className=" bg-[#080A14] relative px-6 md:px-12 lg:px-20 pb-24 pt-24 py-24 overflow-hidden"
         >
 
             {/* ================= BACKGROUND GLOW ================= */}
 
             <div
-                className="absolute top-20 left-1/2 -translate-x-1/2
-                w-[400px] h-[400px] rounded-full blur-[140px]
-                opacity-20 pointer-events-none"
-                style={{
-                    background: accent
-                }}
+                className="absolute top-0 left-1/2 -translate-x-1/2
+                   w-[500px] h-[120px]
+                   blur-[100px] opacity-10
+                   pointer-events-none"
+                style={{ background: accent }}
             />
 
             <div

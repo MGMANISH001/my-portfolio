@@ -1,28 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import { CheckCircle } from "lucide-react";
-
-import {
-    FaPython,
-    FaDatabase,
-    FaChartBar
-} from "react-icons/fa";
-
+import {FaPython, FaDatabase, FaChartBar} from "react-icons/fa";
 import { GiBrain } from "react-icons/gi";
-
 import MovieFeatureImg from "/relevant-recommendations.png";
 import MovieDataImg from "/data-driven-analysis.png";
 import MovieRecommendationImg from "/similarity-based-results.png";
-
 import { useRef, useState } from "react";
 import { animate } from "animejs";
 
 
 export default function ProjectMovie({ accent }) {
-
     const [showDemo, setShowDemo] = useState(false);
-
     const navigate = useNavigate();
-
     const cardRef = useRef(null);
 
 
@@ -31,26 +20,21 @@ export default function ProjectMovie({ accent }) {
     // =====================================================
 
     const handleHover = () => {
-
         animate(cardRef.current, {
             rotate: 0,
             scale: 1.15,
             duration: 500,
             easing: "easeOutQuad",
         });
-
     };
 
-
     const handleLeave = () => {
-
         animate(cardRef.current, {
             rotate: 6,
             scale: 1,
             duration: 500,
             easing: "easeOutQuad",
         });
-
     };
 
 
@@ -59,43 +43,29 @@ export default function ProjectMovie({ accent }) {
     // =====================================================
 
     const tech = [
-
         {
             name: "Python",
-
-            desc:
-                "Used for data processing, exploratory analysis, and developing the recommendation workflow.",
-
+            desc: "Used for data processing, exploratory analysis, and developing the recommendation workflow.",
             icon: <FaPython />
         },
 
         {
             name: "Machine Learning",
-
-            desc:
-                "Applied recommendation techniques to identify similarities between movies and generate relevant suggestions.",
-
+            desc: "Applied recommendation techniques to identify similarities between movies and generate relevant suggestions.",
             icon: <GiBrain />
         },
 
         {
             name: "EDA",
-
-            desc:
-                "Explored movie datasets to understand patterns, attributes, and relationships within the available data.",
-
+            desc: "Explored movie datasets to understand patterns, attributes, and relationships within the available data.",
             icon: <FaChartBar />
         },
 
         {
             name: "Data Processing",
-
-            desc:
-                "Prepared and organized movie information to create meaningful inputs for the recommendation system.",
-
+            desc: "Prepared and organized movie information to create meaningful inputs for the recommendation system.",
             icon: <FaDatabase />
         }
-
     ];
 
 
@@ -104,53 +74,31 @@ export default function ProjectMovie({ accent }) {
     // =====================================================
 
     const features = [
-
         {
             title: "Relevant Recommendations",
-
-            desc:
-                "Generates movie suggestions based on similarities between the selected movie and available movie information.",
-
+            desc: "Generates movie suggestions based on similarities between the selected movie and available movie information.",
             image: MovieFeatureImg
         },
 
         {
             title: "Data-Driven Analysis",
-
-            desc:
-                "Uses movie attributes and dataset patterns to identify relationships that support the recommendation process.",
-
+            desc: "Uses movie attributes and dataset patterns to identify relationships that support the recommendation process.",
             image: MovieDataImg
         },
 
         {
             title: "Similarity-Based Results",
-
-            desc:
-                "Compares relevant movie characteristics to produce a focused list of similar movie recommendations.",
-
+            desc: "Compares relevant movie characteristics to produce a focused list of similar movie recommendations.",
             image: MovieRecommendationImg
         }
-
     ];
 
 
     return (
-
         <div className="px-6 md:px-16 lg:px-24 py-16 max-w-7xl mx-auto space-y-32">
-
-
-            {/* =====================================================
-                HERO
-            ===================================================== */}
-
-            <section
-                className="relative h-[450px] rounded-2xl overflow-hidden border border-white/10 p-10"
+            <section className="relative h-[450px] rounded-2xl overflow-hidden border border-white/10 p-10"
                 id="movie"
             >
-
-                {/* HERO IMAGE */}
-
                 <video
                     autoPlay
                     loop = {true}
@@ -161,68 +109,36 @@ export default function ProjectMovie({ accent }) {
                     <source src="/cosmic-cinema-loop_v2.mp4" type="video/mp4" />
                 </video>
 
-
-                {/* OVERLAY */}
-
                 <div className="absolute inset-0 bg-gradient-to-t from-[#070414] to-transparent" />
-
-
-                {/* HERO CONTENT */}
 
                 <div className="absolute bottom-10 left-10 max-w-2xl">
 
-                    <span
-                        className="text-xs px-3 py-1 rounded-full font-mono"
-                        style={{
-                            background: `${accent}20`,
-                            color: accent
-                        }}
-                    >
+                    <span className="text-xs px-3 py-1 rounded-full font-mono"
+                          style={{background: `${accent}20`, color: accent}}>
                         MACHINE LEARNING PROJECT
                     </span>
 
-
                     <h1 className="text-4xl md:text-6xl font-extrabold mt-4 leading-relaxed tracking-tight">
-
-                        <span className="md:whitespace-nowrap">
-                            Movie Recommendation
-                        </span>
-
+                        <span className="md:whitespace-nowrap">Movie Recommendation</span>
                         <br />
-
-                        <span style={{ color: accent }}>
-                            System
-                        </span>
-
+                        <span style={{ color: accent }}>System</span>
                     </h1>
 
-
                     <p className="text-gray-400 mt-4 leading-relaxed">
-
                         A data-driven recommendation system designed to analyze
                         movie information and suggest relevant titles based on
                         similarities within the dataset.
-
                     </p>
 
-
                     <div className="flex gap-4 mt-6">
-
-                        <button
-                            onClick={() => setShowDemo(true)}
+                        <button onClick={() => setShowDemo(true)}
                             className="text-black font-semibold transition px-6 py-3 rounded-lg shadow-lg transform hover:scale-105"
-                            style={{
-                                background: accent,
-                                boxShadow: `0 5px 20px ${accent}40`
-                            }}
-                        >
+                            style={{background: accent, boxShadow: `0 5px 20px ${accent}40`}}>
                             🎥 Project Demo
                         </button>
 
                     </div>
-
                 </div>
-
             </section>
 
 
@@ -231,109 +147,60 @@ export default function ProjectMovie({ accent }) {
             ===================================================== */}
 
             <section className="grid md:grid-cols-3 gap-10 items-start">
-
-
                 {/* LEFT CONTENT */}
-
                 <div className="md:col-span-2">
 
-                    <p
-                        className="font-mono text-xs mb-3 tracking-widest font-semibold"
-                        style={{ color: accent }}
-                    >
+                    <p className="font-mono text-xs mb-3 tracking-widest font-semibold"
+                        style={{ color: accent }}>
                         INTRODUCTION
                     </p>
 
-
-                    <h2 className="text-3xl font-bold mb-12">
-                        The Challenge
-                    </h2>
-
+                    <h2 className="text-3xl font-bold mb-12">The Challenge</h2>
 
                     <p className="text-gray-400 text-sm leading-relaxed">
-
                         With a large number of movies available across different
                         platforms, finding relevant content can become difficult.
                         The main challenge was to build a recommendation system
                         that could analyze movie information and identify titles
                         with similar characteristics.
-
                     </p>
 
-
                     <p className="text-gray-400 text-sm mt-4 leading-relaxed">
-
                         The project involved preparing the available dataset,
                         understanding useful movie attributes, and developing
                         recommendation logic capable of producing relevant
                         suggestions for a selected movie.
-
                     </p>
 
-
                     <p className="text-gray-400 text-sm mt-4 leading-relaxed">
-
                         The objective was to create a simple and understandable
                         recommendation workflow while gaining practical
                         experience with data analysis and machine-learning
                         concepts.
-
                     </p>
 
                 </div>
 
-
                 {/* QUICK STATS */}
 
                 <div className="bg-[#0f172a] border border-white/10 p-6 rounded-xl">
-
-                    <h3 className="mb-6 font-bold leading-relaxed tracking-wide">
-                        Quick Stats
-                    </h3>
-
-
+                    <h3 className="mb-6 font-bold leading-relaxed tracking-wide">Quick Stats</h3>
                     <ul className="text-xs text-gray-400 space-y-6 font-mono">
 
-                        <li>
-                            ROLE
-                        </li>
+                        <li>ROLE</li>
+                        <span className="text-white text-sm font-semibold font-sans">Developer</span>
 
-                        <span className="text-white text-sm font-semibold font-sans">
-                            Developer
-                        </span>
+                        <li>TYPE</li>
+                        <span className="text-white text-sm font-semibold font-sans">Machine Learning Project</span>
 
-
-                        <li>
-                            TYPE
-                        </li>
-
-                        <span className="text-white text-sm font-semibold font-sans">
-                            Machine Learning Project
-                        </span>
-
-
-                        <li>
-                            TECHNOLOGIES
-                        </li>
-
-                        <span className="text-white text-sm font-semibold font-sans">
-                            Python · ML · EDA
-                        </span>
-
+                        <li>TECHNOLOGIES</li>
+                        <span className="text-white text-sm font-semibold font-sans">Python · ML · EDA</span>
 
                         <li className="flex-1 h-[1px] bg-white/10"></li>
 
-
-                        <li>
-                            FOCUS
-                        </li>
-
-                        <span
-                            className="text-sm font-semibold font-sans"
-                            style={{ color: accent }}
-                        >
-                            ● Movie Recommendations
-                        </span>
+                        <li>FOCUS</li>
+                        <span className="text-sm font-semibold font-sans"
+                              style={{ color: accent }}>● Movie Recommendations</span>
 
                     </ul>
 
@@ -348,76 +215,46 @@ export default function ProjectMovie({ accent }) {
 
             <section>
 
-                <p
-                    className="text-xs mb-3 text-center font-mono tracking-widest font-semibold"
-                    style={{ color: accent }}
-                >
-                    THE ENGINE
-                </p>
-
+                <p className="text-xs mb-3 text-center font-mono tracking-widest font-semibold"
+                   style={{ color: accent }}>THE ENGINE</p>
 
                 <h2 className="text-3xl font-bold mb-12 text-center">
                     Technological Foundation
                 </h2>
 
-
                 <div className="grid md:grid-cols-4 gap-6">
-
                     {tech.map((item, i) => (
-
                         <div
                             key={i}
                             className="h-full relative bg-[#0f172a]/80 backdrop-blur-md border border-white/10 p-5 rounded-2xl transition-all duration-300 hover:shadow-[0_10px_40px_rgba(0,0,0,0.5)] group"
-
-                            style={{
-                                borderColor: accent + "30"
-                            }}
+                            style={{borderColor: accent + "30"}}
 
                             onMouseEnter={(e) => {
-
                                 e.currentTarget.style.borderColor = accent;
-
                                 e.currentTarget.style.boxShadow =
                                     `0 0 25px ${accent}55`;
-
                             }}
 
                             onMouseLeave={(e) => {
-
-                                e.currentTarget.style.borderColor =
-                                    accent + "30";
-
-                                e.currentTarget.style.boxShadow =
-                                    "none";
-
+                                e.currentTarget.style.borderColor = accent + "30";
+                                e.currentTarget.style.boxShadow = "none";
                             }}
                         >
 
-                            <div
-                                className="w-12 h-12 flex items-center justify-center rounded-xl mb-4 transition-all group-hover:scale-110"
-
-                                style={{
-                                    color: accent,
-                                    background: accent + "15"
-                                }}
-                            >
-
+                            <div className="w-12 h-12 flex items-center justify-center rounded-xl mb-4 transition-all group-hover:scale-110"
+                                 style={{color: accent, background: accent + "15"}}>
                                 {item.icon}
-
                             </div>
-
 
                             <h4 className="font-semibold">
                                 {item.name}
                             </h4>
-
 
                             <p className="text-gray-400 text-sm mt-2 tracking-wide">
                                 {item.desc}
                             </p>
 
                         </div>
-
                     ))}
 
                 </div>
@@ -430,11 +267,8 @@ export default function ProjectMovie({ accent }) {
             ===================================================== */}
 
             <section>
-
-                <p
-                    className="text-xs mb-3 font-mono tracking-widest font-semibold"
-                    style={{ color: accent }}
-                >
+                <p className="text-xs mb-3 font-mono tracking-widest font-semibold"
+                   style={{ color: accent }}>
                     CORE CAPABILITIES
                 </p>
 
@@ -445,16 +279,11 @@ export default function ProjectMovie({ accent }) {
 
 
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-
                     {features.map((f, i) => (
-
                         <div
                             key={i}
                             className="group"
                         >
-
-                            {/* IMAGE */}
-
                             <div className="relative h-44 overflow-hidden transition-all w-full mb-4">
 
                                 <img
@@ -521,7 +350,7 @@ export default function ProjectMovie({ accent }) {
                     </p>
 
 
-                    <h2 className="text-3xl font-semibold mb-12">
+                    <h2 className="text-3xl font-bold mb-12">
                         Execution & Architecture
                     </h2>
 

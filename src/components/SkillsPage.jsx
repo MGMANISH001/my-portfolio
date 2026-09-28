@@ -139,7 +139,7 @@ export default function Skills({ accent }) {
     /* ================= UI ================= */
 
     return (
-        <section className="section bg-gradient-to-b from-[#070414] to-[#0f172a] text-white px-6 md:px-16 lg:px-24 py-24">
+        <section className="section bg-[#0B0F1C] text-white px-6 md:px-16 lg:px-24 py-24">
 
             <div className="container">
 

@@ -45,7 +45,7 @@ export default function Projects({accent}) {
     ]
 
     return (
-        <section className="bg-gradient-to-b from-[#070414] to-[#0f172a] w-full gap-16 px-6 md:px-16 lg:px-24 py-24">
+        <section className=" pt-32 bg-[#0B0F1C] w-full gap-16 px-6 md:px-16 lg:px-24 py-24 pb-24 ">
             <div className="container">
             <div className="relative mb-16 text-center">
                 <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-2 blur-[120px] opacity-20"
@@ -66,7 +66,7 @@ export default function Projects({accent}) {
                 {projects.map((project, i) => (
                     <div
                         key={i}
-                    className="project-card relative bg-[#0f172a] rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-xl flex flex-col h-full"
+                    className="project-card relative bg-[#101525] rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-xl flex flex-col h-full"
                     style={{ borderColor: accent + "30"}}>
                         
                         <div className="overflow-hidden">

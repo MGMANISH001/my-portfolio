@@ -45,6 +45,7 @@ export default function App() {
                 <Route path="/project/cce" element={<ProjectCCE accent={accent} />} />
                 <Route path="/project/game" element={<ProjectGame accent={accent} />} />
                 <Route path="/project/movie" element={<ProjectMovie accent={accent} />} />
+                {/*<Route path="/Contact" element={<Contact accent={accent} />} />*/}
             </Routes>
 
         </div>
