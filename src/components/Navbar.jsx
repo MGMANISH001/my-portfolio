@@ -1,148 +1,106 @@
-import ThemeSwitcher from "./ThemeSwitcher.jsx";
-import { NavLink, useNavigate, useLocation } from "react-router-dom";
+import { useState, useEffect } from 'react'
+import { navLinks, profile } from '../data/content'
 
-export default function Navbar({ setAccent, accent }) {
+/**
+ * Navbar — FIXES:
+ * 1. All links are smooth-scroll anchors (no more /About → 404)
+ * 2. "Projects" added to the navigation
+ * 3. Mobile hamburger menu (was completely missing)
+ * 4. Active-section highlighting via IntersectionObserver
+ * 5. Glassy blur backdrop after scrolling
+ */
+export default function Navbar() {
+  const [scrolled, setScrolled] = useState(false)
+  const [open, setOpen] = useState(false)
+  const [active, setActive] = useState('home')
 
-    const navigate = useNavigate();
-    const location = useLocation();
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
-    // HOME
-    const handleHome = () => {
-        if (location.pathname === "/Home") {
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-        } else {
-            navigate("/Home");
-        }
-    };
+  // Track which section is in view
+  useEffect(() => {
+    const ids = navLinks.map((l) => l.href.slice(1))
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) setActive(e.target.id)
+        })
+      },
+      { rootMargin: '-40% 0px -55% 0px' }
+    )
+    ids.forEach((id) => {
+      const el = document.getElementById(id)
+      if (el) io.observe(el)
+    })
+    return () => io.disconnect()
+  }, [])
 
-    // SKILLS
-    const handleSkills = () => {
-        if (location.pathname === "/Home") {
-            document.getElementById("skills")?.scrollIntoView({
-                behavior: "smooth"
-            });
-        } else {
-            navigate("/Home#skills");
-        }
-    };
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : ''
+    return () => (document.body.style.overflow = '')
+  }, [open])
 
-    // CONTACT
-    const handleContact = () => {
-        if (location.pathname === "/Home") {
-            document.getElementById("contact")?.scrollIntoView({
-                behavior: "smooth"
-            });
-        } else {
-            navigate("/Home#contact");
-        }
-    };
+  const closeMenu = () => setOpen(false)
 
-    return (
-        <nav
-            className="sticky top-0 z-50 w-full backdrop-blur-md bg-[#06060D]/90 border-b"
-            style={{ borderColor: `${accent}30` }}
-        >
-            <div className="container flex items-center justify-between px-6 md:px-12 lg:px-20 py-3">
+  return (
+    <>
+      <header className={`nav ${scrolled ? 'scrolled' : ''}`}>
+        <div className="container nav-inner">
+          <a href="#home" className="nav-logo" onClick={closeMenu}>
+            {profile.firstName}<span className="dot">.</span>dev
+          </a>
 
-                {/* Logo */}
-                <h1
-                    className="text-lg md:text-xl font-semibold"
-                    style={{ color: accent }}
-                >
-                    Manish's Portfolio
-                </h1>
+          <nav aria-label="Primary">
+            <ul className="nav-links">
+              {navLinks.map((link) => (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    className={`nav-link ${active === link.href.slice(1) ? 'active' : ''}`}
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
 
-                {/* Navigation */}
-                <div className="flex items-center text-sm gap-6 md:gap-10 md:text-base text-gray-300">
+          <a href={profile.resumeUrl} className="nav-cta" target="_blank" rel="noreferrer">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+            Resume
+          </a>
 
-                    {/* HOME */}
-                    <button
-                        onClick={handleHome}
-                        className="transition-colors duration-300"
-                        style={{ color: "#d1d5db" }}
-                        onMouseEnter={(e) => {
-                            e.currentTarget.style.color = accent;
-                        }}
-                        onMouseLeave={(e) => {
-                            e.currentTarget.style.color = "#d1d5db";
-                        }}
-                    >
-                        Home
-                    </button>
+          <button
+            className={`nav-burger ${open ? 'open' : ''}`}
+            onClick={() => setOpen(!open)}
+            aria-label={open ? 'Close menu' : 'Open menu'}
+            aria-expanded={open}
+          >
+            <span /><span /><span />
+          </button>
+        </div>
+      </header>
 
-                    {/* SKILLS */}
-                    <button
-                        onClick={handleSkills}
-                        className="transition-colors duration-300"
-                        style={{ color: "#d1d5db" }}
-                        onMouseEnter={(e) => {
-                            e.currentTarget.style.color = accent;
-                        }}
-                        onMouseLeave={(e) => {
-                            e.currentTarget.style.color = "#d1d5db";
-                        }}
-                    >
-                        Skills
-                    </button>
-
-                    {/* ABOUT */}
-                    <NavLink
-                        to="/About"
-                        className="transition-colors duration-300"
-                        style={({ isActive }) => ({
-                            color: isActive ? accent : "#d1d5db"
-                        })}
-                        onMouseEnter={(e) => {
-                            e.currentTarget.style.color = accent;
-                        }}
-                        onMouseLeave={(e) => {
-                            e.currentTarget.style.color = "#d1d5db";
-                        }}
-                    >
-                        About
-                    </NavLink>
-
-                    {/* CONTACT */}
-                    <button
-                        onClick={handleContact}
-                        className="transition-colors duration-300"
-                        style={{ color: "#d1d5db" }}
-                        onMouseEnter={(e) => {
-                            e.currentTarget.style.color = accent;
-                        }}
-                        onMouseLeave={(e) => {
-                            e.currentTarget.style.color = "#d1d5db";
-                        }}
-                    >
-                        Contact
-                    </button>
-
-                </div>
-
-                {/* Right Side */}
-                <div className="flex items-center gap-5">
-
-                    <ThemeSwitcher
-                        accent={accent}
-                        updateTheme={setAccent}
-                    />
-
-                    <button
-                        className="text-white text-sm md:text-base rounded-lg py-2 px-4 shadow-lg transition"
-                        style={{
-                            background: accent,
-                            boxShadow: `0 10px 25px ${accent}50`
-                        }}
-                    >
-                        Resume
-                    </button>
-
-                </div>
-
-            </div>
-        </nav>
-    );
+      {/* Mobile full-screen menu */}
+      <div className={`mobile-menu ${open ? 'open' : ''}`}>
+        {navLinks.map((link, i) => (
+          <a key={link.href} href={link.href} onClick={closeMenu} style={{ transitionDelay: `${i * 55}ms` }}>
+            {link.label}
+          </a>
+        ))}
+        <a href={profile.resumeUrl} className="nav-cta" onClick={closeMenu} target="_blank" rel="noreferrer">
+          Download Resume
+        </a>
+      </div>
+    </>
+  )
 }

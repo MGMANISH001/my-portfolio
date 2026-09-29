@@ -1,518 +1,131 @@
-import { useState } from "react";
-import {FaGithub, FaLinkedin, FaEnvelope, FaMapMarkerAlt, FaPaperPlane} from "react-icons/fa";
+import { useState } from 'react'
+import useReveal from '../hooks/useReveal'
+import { profile, socials } from '../data/content'
 
+const GithubIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.21.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.11-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6.01 0c2.29-1.55 3.3-1.23 3.3-1.23.65 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.63-5.49 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.31 24 12c0-6.63-5.37-12-12-12z" />
+  </svg>
+)
+const LinkedinIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.55V9h3.57v11.45z" />
+  </svg>
+)
+const MailIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <rect x="2" y="4" width="20" height="16" rx="2" /><path d="m22 7-10 5L2 7" />
+  </svg>
+)
+const PinIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" />
+  </svg>
+)
 
-export default function Contact({ accent }) {
-    const [formData, setFormData] = useState({
-        name: "",
-        email: "",
-        message: ""
-    });
+/**
+ * Contact — FIXES:
+ * - Real email (edit src/data/content.js — was your-email@gmail.com)
+ * - Social links come from the socials config (was github.com/ homepage)
+ * - Form validates + shows status; wire `handleSubmit` to Formspree/
+ *   EmailJS/Web3Forms when ready (see README).
+ */
+export default function Contact() {
+  const ref = useReveal()
+  const [status, setStatus] = useState('')
 
-    const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
-    };
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    const data = Object.fromEntries(new FormData(e.target))
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    // Basic validation
+    if (!data.name.trim() || !data.email.trim() || !data.message.trim()) {
+      setStatus('Please fill in all fields.')
+      return
+    }
 
-        const subject = encodeURIComponent(
-            `Portfolio Contact from ${formData.name}`
-        );
+    // ── WIRE YOUR BACKEND HERE ─────────────────────────────
+    // Option A (easiest): formspree.io — free tier, no backend needed
+    //   await fetch('https://formspree.io/f/YOUR_FORM_ID', {
+    //     method: 'POST', headers: {'Content-Type':'application/json'},
+    //     body: JSON.stringify(data) })
+    // Option B: EmailJS / Web3Forms / your own API route.
+    // ────────────────────────────────────────────────────────
+    setStatus(`Thanks ${data.name}! Your message is ready to send — connect a form service (see README).`)
+    e.target.reset()
+  }
 
-        const body = encodeURIComponent(
-            `Name: ${formData.name}\n\n` +
-            `Email: ${formData.email}\n\n` +
-            `Message:\n${formData.message}`
-        );
+  return (
+    <section id="contact">
+      <div className="container" ref={ref}>
+        <div className="sec-head reveal">
+          <span className="sec-eyebrow">Get in touch</span>
+          <h2 className="sec-title">Let's work <span className="grad-text">together.</span></h2>
+          <p className="sec-sub">
+            Have a project idea, a collaboration opportunity, or just want to say
+            hello? My inbox is always open.
+          </p>
+        </div>
 
-        window.location.href =
-            `mailto:your-email@gmail.com?subject=${subject}&body=${body}`;
-    };
+        <div className="contact-grid">
+          <div className="contact-info reveal">
+            <h3>Let's start a conversation</h3>
+            <p>
+              Whether you're looking to build a modern web application, improve an
+              existing interface, or collaborate on a creative project — I'd be
+              happy to hear from you.
+            </p>
 
-    return (
-        <section
-            id="contact"
-            className=" bg-[#080A14] relative px-6 md:px-12 lg:px-20 pb-24 pt-24 py-24 overflow-hidden"
-        >
+            <a className="info-row" href={`mailto:${profile.email}`}>
+              <span className="info-icon"><MailIcon /></span>
+              <span>
+                <span className="info-label">Email</span>
+                <span className="info-value" style={{ display: 'block' }}>{profile.email}</span>
+              </span>
+            </a>
 
-            {/* ================= BACKGROUND GLOW ================= */}
-
-            <div
-                className="absolute top-0 left-1/2 -translate-x-1/2
-                   w-[500px] h-[120px]
-                   blur-[100px] opacity-10
-                   pointer-events-none"
-                style={{ background: accent }}
-            />
-
-            <div
-                className="absolute bottom-0 left-0
-                w-[250px] h-[250px] rounded-full blur-[120px]
-                opacity-10 pointer-events-none"
-                style={{
-                    background: accent
-                }}
-            />
-
-
-            {/* ================= HEADER ================= */}
-
-            <div className="relative z-10 text-center mb-16">
-
-                <p
-                    className="text-xs font-mono tracking-[0.25em] mb-3"
-                    style={{ color: accent }}
-                >
-                    GET IN TOUCH
-                </p>
-
-                <h2 className="text-4xl md:text-5xl font-bold">
-                    Let's work{" "}
-                    <span style={{ color: accent }}>
-                        together.
-                    </span>
-                </h2>
-
-                <p className="text-gray-400 max-w-2xl mx-auto mt-5 text-sm md:text-base leading-relaxed">
-                    Have a project idea, collaboration opportunity, or
-                    just want to say hello? Feel free to reach out.
-                    I'm always open to discussing new ideas and opportunities.
-                </p>
-
+            <div className="info-row">
+              <span className="info-icon"><PinIcon /></span>
+              <span>
+                <span className="info-label">Location</span>
+                <span className="info-value" style={{ display: 'block' }}>{profile.location}</span>
+              </span>
             </div>
 
-
-            {/* ================= MAIN CONTENT ================= */}
-
-            <div className="relative z-10 max-w-6xl mx-auto grid lg:grid-cols-2 gap-10">
-
-
-                {/* =====================================================
-                    LEFT - CONTACT INFORMATION
-                ===================================================== */}
-
-                <div>
-
-                    <h3 className="text-2xl font-semibold mb-4">
-                        Let's start a conversation
-                    </h3>
-
-                    <p className="text-gray-400 text-sm leading-relaxed mb-8 max-w-lg">
-                        Whether you're looking to build a modern web
-                        application, improve an existing interface, or
-                        collaborate on a creative project, I'd be happy
-                        to hear from you.
-                    </p>
-
-
-                    {/* EMAIL */}
-
-                    <div
-                        className="group flex items-center gap-4
-                        p-4 rounded-xl border
-                        bg-white/[0.02] transition-all duration-300
-                        hover:-translate-y-1"
-                        style={{
-                            borderColor: `${accent}30`
-                        }}
-                        onMouseEnter={(e) => {
-                            e.currentTarget.style.borderColor = accent;
-                            e.currentTarget.style.boxShadow =
-                                `0 0 25px ${accent}20`;
-                        }}
-                        onMouseLeave={(e) => {
-                            e.currentTarget.style.borderColor =
-                                `${accent}30`;
-                            e.currentTarget.style.boxShadow = "none";
-                        }}
-                    >
-
-                        <div
-                            className="w-11 h-11 rounded-lg
-                            flex items-center justify-center"
-                            style={{
-                                background: `${accent}15`,
-                                color: accent
-                            }}
-                        >
-                            <FaEnvelope />
-                        </div>
-
-                        <div>
-                            <p className="text-xs text-gray-500 mb-1">
-                                EMAIL
-                            </p>
-
-                            <a
-                                href="mailto:your-email@gmail.com"
-                                className="text-sm text-gray-200
-                                hover:text-white transition"
-                            >
-                                your-email@gmail.com
-                            </a>
-                        </div>
-
-                    </div>
-
-
-                    {/* LOCATION */}
-
-                    <div
-                        className="group flex items-center gap-4
-                        p-4 rounded-xl border
-                        bg-white/[0.02] mt-4
-                        transition-all duration-300
-                        hover:-translate-y-1"
-                        style={{
-                            borderColor: `${accent}30`
-                        }}
-                        onMouseEnter={(e) => {
-                            e.currentTarget.style.borderColor = accent;
-                            e.currentTarget.style.boxShadow =
-                                `0 0 25px ${accent}20`;
-                        }}
-                        onMouseLeave={(e) => {
-                            e.currentTarget.style.borderColor =
-                                `${accent}30`;
-                            e.currentTarget.style.boxShadow = "none";
-                        }}
-                    >
-
-                        <div
-                            className="w-11 h-11 rounded-lg
-                            flex items-center justify-center"
-                            style={{
-                                background: `${accent}15`,
-                                color: accent
-                            }}
-                        >
-                            <FaMapMarkerAlt />
-                        </div>
-
-                        <div>
-                            <p className="text-xs text-gray-500 mb-1">
-                                LOCATION
-                            </p>
-
-                            <p className="text-sm text-gray-200">
-                                India
-                            </p>
-                        </div>
-
-                    </div>
-
-
-                    {/* SOCIAL LINKS */}
-
-                    <div className="mt-8">
-
-                        <p className="text-sm font-semibold mb-4">
-                            Connect with me
-                        </p>
-
-                        <div className="flex gap-3">
-
-                            {/* GITHUB */}
-
-                            <a
-                                href="https://github.com/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="w-11 h-11 rounded-lg
-                                border flex items-center justify-center
-                                transition-all duration-300
-                                hover:-translate-y-1"
-                                style={{
-                                    borderColor: `${accent}30`,
-                                    color: accent
-                                }}
-                                onMouseEnter={(e) => {
-                                    e.currentTarget.style.background =
-                                        `${accent}15`;
-                                    e.currentTarget.style.boxShadow =
-                                        `0 0 20px ${accent}30`;
-                                }}
-                                onMouseLeave={(e) => {
-                                    e.currentTarget.style.background =
-                                        "transparent";
-                                    e.currentTarget.style.boxShadow =
-                                        "none";
-                                }}
-                            >
-                                <FaGithub />
-                            </a>
-
-
-                            {/* LINKEDIN */}
-
-                            <a
-                                href="https://www.linkedin.com/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="w-11 h-11 rounded-lg
-                                border flex items-center justify-center
-                                transition-all duration-300
-                                hover:-translate-y-1"
-                                style={{
-                                    borderColor: `${accent}30`,
-                                    color: accent
-                                }}
-                                onMouseEnter={(e) => {
-                                    e.currentTarget.style.background =
-                                        `${accent}15`;
-                                    e.currentTarget.style.boxShadow =
-                                        `0 0 20px ${accent}30`;
-                                }}
-                                onMouseLeave={(e) => {
-                                    e.currentTarget.style.background =
-                                        "transparent";
-                                    e.currentTarget.style.boxShadow =
-                                        "none";
-                                }}
-                            >
-                                <FaLinkedin />
-                            </a>
-
-
-                            {/* EMAIL */}
-
-                            <a
-                                href="mailto:your-email@gmail.com"
-                                className="w-11 h-11 rounded-lg
-                                border flex items-center justify-center
-                                transition-all duration-300
-                                hover:-translate-y-1"
-                                style={{
-                                    borderColor: `${accent}30`,
-                                    color: accent
-                                }}
-                                onMouseEnter={(e) => {
-                                    e.currentTarget.style.background =
-                                        `${accent}15`;
-                                    e.currentTarget.style.boxShadow =
-                                        `0 0 20px ${accent}30`;
-                                }}
-                                onMouseLeave={(e) => {
-                                    e.currentTarget.style.background =
-                                        "transparent";
-                                    e.currentTarget.style.boxShadow =
-                                        "none";
-                                }}
-                            >
-                                <FaEnvelope />
-                            </a>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                {/* =====================================================
-                    RIGHT - CONTACT FORM
-                ===================================================== */}
-
-                <div
-                    className="relative p-6 md:p-8 rounded-2xl
-                    border bg-[#0b1020]/80 backdrop-blur-xl"
-                    style={{
-                        borderColor: `${accent}35`
-                    }}
-                >
-
-                    {/* CARD GLOW */}
-
-                    <div
-                        className="absolute inset-0 rounded-2xl
-                        opacity-0 hover:opacity-100
-                        transition-opacity duration-500
-                        pointer-events-none"
-                        style={{
-                            boxShadow: `inset 0 0 40px ${accent}08`
-                        }}
-                    />
-
-
-                    <div className="relative">
-
-                        <h3 className="text-xl font-semibold mb-2">
-                            Send me a message
-                        </h3>
-
-                        <p className="text-gray-500 text-sm mb-7">
-                            I'll get back to you as soon as possible.
-                        </p>
-
-
-                        <form
-                            onSubmit={handleSubmit}
-                            className="space-y-5"
-                        >
-
-                            {/* NAME */}
-
-                            <div>
-
-                                <label className="block text-sm text-gray-400 mb-2">
-                                    Your Name
-                                </label>
-
-                                <input
-                                    type="text"
-                                    name="name"
-                                    value={formData.name}
-                                    onChange={handleChange}
-                                    placeholder="Enter your name"
-                                    required
-                                    className="w-full px-4 py-3 rounded-lg
-                                    bg-white/[0.03]
-                                    border border-white/10
-                                    text-white text-sm
-                                    outline-none transition-all"
-                                    onFocus={(e) => {
-                                        e.currentTarget.style.borderColor =
-                                            accent;
-                                        e.currentTarget.style.boxShadow =
-                                            `0 0 15px ${accent}15`;
-                                    }}
-                                    onBlur={(e) => {
-                                        e.currentTarget.style.borderColor =
-                                            "rgba(255,255,255,0.1)";
-                                        e.currentTarget.style.boxShadow =
-                                            "none";
-                                    }}
-                                />
-
-                            </div>
-
-
-                            {/* EMAIL */}
-
-                            <div>
-
-                                <label className="block text-sm text-gray-400 mb-2">
-                                    Email Address
-                                </label>
-
-                                <input
-                                    type="email"
-                                    name="email"
-                                    value={formData.email}
-                                    onChange={handleChange}
-                                    placeholder="you@example.com"
-                                    required
-                                    className="w-full px-4 py-3 rounded-lg
-                                    bg-white/[0.03]
-                                    border border-white/10
-                                    text-white text-sm
-                                    outline-none transition-all"
-                                    onFocus={(e) => {
-                                        e.currentTarget.style.borderColor =
-                                            accent;
-                                        e.currentTarget.style.boxShadow =
-                                            `0 0 15px ${accent}15`;
-                                    }}
-                                    onBlur={(e) => {
-                                        e.currentTarget.style.borderColor =
-                                            "rgba(255,255,255,0.1)";
-                                        e.currentTarget.style.boxShadow =
-                                            "none";
-                                    }}
-                                />
-
-                            </div>
-
-
-                            {/* MESSAGE */}
-
-                            <div>
-
-                                <label className="block text-sm text-gray-400 mb-2">
-                                    Message
-                                </label>
-
-                                <textarea
-                                    name="message"
-                                    value={formData.message}
-                                    onChange={handleChange}
-                                    placeholder="Tell me about your project..."
-                                    required
-                                    rows="6"
-                                    className="w-full px-4 py-3 rounded-lg
-                                    bg-white/[0.03]
-                                    border border-white/10
-                                    text-white text-sm
-                                    outline-none resize-none
-                                    transition-all"
-                                    onFocus={(e) => {
-                                        e.currentTarget.style.borderColor =
-                                            accent;
-                                        e.currentTarget.style.boxShadow =
-                                            `0 0 15px ${accent}15`;
-                                    }}
-                                    onBlur={(e) => {
-                                        e.currentTarget.style.borderColor =
-                                            "rgba(255,255,255,0.1)";
-                                        e.currentTarget.style.boxShadow =
-                                            "none";
-                                    }}
-                                />
-
-                            </div>
-
-
-                            {/* SUBMIT */}
-
-                            <button
-                                type="submit"
-                                className="w-full py-3 rounded-lg
-                                font-semibold text-sm
-                                flex items-center justify-center
-                                gap-2 transition-all duration-300
-                                hover:-translate-y-1"
-                                style={{
-                                    background: accent,
-                                    color: "#050505",
-                                    boxShadow: `0 8px 25px ${accent}30`
-                                }}
-                            >
-
-                                <FaPaperPlane />
-
-                                Send Message
-
-                            </button>
-
-                        </form>
-
-                    </div>
-
-                </div>
-
+            <div className="contact-socials">
+              <a href={socials.github} target="_blank" rel="noreferrer" aria-label="GitHub"><GithubIcon /></a>
+              <a href={socials.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn"><LinkedinIcon /></a>
+              <a href={`mailto:${profile.email}`} aria-label="Email"><MailIcon /></a>
+            </div>
+          </div>
+
+          <form className="contact-form reveal" onSubmit={handleSubmit} noValidate>
+            <h3>Send me a message</h3>
+            <p className="form-note">I'll get back to you as soon as possible.</p>
+
+            <div className="form-group">
+              <label htmlFor="name">Your Name</label>
+              <input id="name" name="name" type="text" placeholder="Enter your name" required />
+            </div>
+            <div className="form-group">
+              <label htmlFor="email">Email Address</label>
+              <input id="email" name="email" type="email" placeholder="you@example.com" required />
+            </div>
+            <div className="form-group">
+              <label htmlFor="message">Message</label>
+              <textarea id="message" name="message" rows="5" placeholder="Tell me about your project..." required />
             </div>
 
-
-            {/* ================= BOTTOM LINE ================= */}
-
-            <div
-                className="max-w-6xl mx-auto mt-20 pt-8
-                border-t text-center"
-                style={{
-                    borderColor: `${accent}20`
-                }}
-            >
-
-                <p className="text-xs text-gray-500">
-                    Have an idea? Let's turn it into something meaningful.
-                </p>
-
-            </div>
-
-        </section>
-    );
+            <button type="submit" className="btn btn-primary form-submit">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="22" y1="2" x2="11" y2="13" /><polygon points="22 2 15 22 11 13 2 9 22 2" />
+              </svg>
+              Send Message
+            </button>
+            <div className="form-status" role="status">{status}</div>
+          </form>
+        </div>
+      </div>
+    </section>
+  )
 }
