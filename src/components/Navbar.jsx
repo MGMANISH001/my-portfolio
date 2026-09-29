@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { navLinks, profile } from '../data/content'
+import ThemeSwitcher from './ThemeSwitcher'
 
 /**
  * Navbar — FIXES:
@@ -78,6 +79,8 @@ export default function Navbar() {
             </svg>
             Resume
           </a>
+
+          <ThemeSwitcher />
 
           <button
             className={`nav-burger ${open ? 'open' : ''}`}

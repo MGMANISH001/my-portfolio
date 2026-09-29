@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import useReveal from '../hooks/useReveal'
-import { profile, socials } from '../data/content'
+import { profile, socials, FORMSPREE_ENDPOINT } from '../data/content'
 
 const GithubIcon = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -27,32 +27,88 @@ const PinIcon = () => (
  * Contact — FIXES:
  * - Real email (edit src/data/content.js — was your-email@gmail.com)
  * - Social links come from the socials config (was github.com/ homepage)
- * - Form validates + shows status; wire `handleSubmit` to Formspree/
- *   EmailJS/Web3Forms when ready (see README).
+ * - Form wired to Formspree (endpoint in src/data/content.js):
+ *     • sending / success / error states, button locks while sending
+ *     • email format validation + honeypot anti-spam field
+ *     • graceful "email me directly" fallback until endpoint is set
  */
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
 export default function Contact() {
   const ref = useReveal()
-  const [status, setStatus] = useState('')
+  const [status, setStatus] = useState(null) // { type: 'success' | 'error', msg }
+  const [sending, setSending] = useState(false)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const data = Object.fromEntries(new FormData(e.target))
+    if (sending) return
+    const form = e.target
+    const data = Object.fromEntries(new FormData(form))
 
-    // Basic validation
-    if (!data.name.trim() || !data.email.trim() || !data.message.trim()) {
-      setStatus('Please fill in all fields.')
+    // Honeypot: real users never see this field — if it's filled, it's a bot.
+    // Silently pretend success so bots don't learn anything.
+    if (data._gotcha) {
+      form.reset()
       return
     }
 
-    // ── WIRE YOUR BACKEND HERE ─────────────────────────────
-    // Option A (easiest): formspree.io — free tier, no backend needed
-    //   await fetch('https://formspree.io/f/YOUR_FORM_ID', {
-    //     method: 'POST', headers: {'Content-Type':'application/json'},
-    //     body: JSON.stringify(data) })
-    // Option B: EmailJS / Web3Forms / your own API route.
-    // ────────────────────────────────────────────────────────
-    setStatus(`Thanks ${data.name}! Your message is ready to send — connect a form service (see README).`)
-    e.target.reset()
+    // Validation
+    if (!data.name.trim() || !data.email.trim() || !data.message.trim()) {
+      setStatus({ type: 'error', msg: 'Please fill in all fields.' })
+      return
+    }
+    if (!EMAIL_RE.test(data.email.trim())) {
+      setStatus({ type: 'error', msg: 'Please enter a valid email address.' })
+      return
+    }
+
+    // Fallback: form service not connected yet → point to direct email
+    if (!FORMSPREE_ENDPOINT) {
+      setStatus({
+        type: 'success',
+        msg: `Thanks ${data.name.trim()}! My form isn't connected yet — please email me directly at ${profile.email}.`,
+      })
+      return
+    }
+
+    // Send via Formspree
+    try {
+      setSending(true)
+      setStatus(null)
+      const res = await fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          name: data.name.trim(),
+          email: data.email.trim(),
+          message: data.message.trim(),
+          _subject: `Portfolio message from ${data.name.trim()}`,
+          _replyto: data.email.trim(),
+        }),
+      })
+
+      if (res.ok) {
+        setStatus({
+          type: 'success',
+          msg: `Thanks ${data.name.trim()}! Your message has been sent — I'll get back to you soon.`,
+        })
+        form.reset()
+      } else {
+        const payload = await res.json().catch(() => ({}))
+        const msg =
+          payload?.errors?.[0]?.message ||
+          payload?.error ||
+          'Something went wrong — please try again, or email me directly.'
+        setStatus({ type: 'error', msg })
+      }
+    } catch {
+      setStatus({
+        type: 'error',
+        msg: 'Network error — please check your connection and try again.',
+      })
+    } finally {
+      setSending(false)
+    }
   }
 
   return (
@@ -103,6 +159,16 @@ export default function Contact() {
             <h3>Send me a message</h3>
             <p className="form-note">I'll get back to you as soon as possible.</p>
 
+            {/* Honeypot — hidden from humans, catches spam bots */}
+            <input
+              type="text"
+              name="_gotcha"
+              className="hp-field"
+              tabIndex="-1"
+              autoComplete="off"
+              aria-hidden="true"
+            />
+
             <div className="form-group">
               <label htmlFor="name">Your Name</label>
               <input id="name" name="name" type="text" placeholder="Enter your name" required />
@@ -116,13 +182,28 @@ export default function Contact() {
               <textarea id="message" name="message" rows="5" placeholder="Tell me about your project..." required />
             </div>
 
-            <button type="submit" className="btn btn-primary form-submit">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="22" y1="2" x2="11" y2="13" /><polygon points="22 2 15 22 11 13 2 9 22 2" />
-              </svg>
-              Send Message
+            <button type="submit" className="btn btn-primary form-submit" disabled={sending}>
+              {sending ? (
+                <>
+                  <svg className="spin" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden="true">
+                    <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+                  </svg>
+                  Sending…
+                </>
+              ) : (
+                <>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="22" y1="2" x2="11" y2="13" /><polygon points="22 2 15 22 11 13 2 9 22 2" />
+                  </svg>
+                  Send Message
+                </>
+              )}
             </button>
-            <div className="form-status" role="status">{status}</div>
+            {status && (
+              <div className={`form-status ${status.type}`} role="status" aria-live="polite">
+                {status.msg}
+              </div>
+            )}
           </form>
         </div>
       </div>

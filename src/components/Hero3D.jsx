@@ -1,11 +1,13 @@
 import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
+import { ACCENTS, getActiveAccent } from '../data/accents'
 
 /**
  * Hero3D — animated 3D background (Three.js)
  * - Floating wireframe geometry (icosahedron, torus knot, octahedron)
- * - Drifting particle field in the purple palette
+ * - Drifting particle field in the active accent palette
  * - Mouse-parallax camera movement
+ * - Accent-aware: recolors lights, wireframes & particles live on accent change
  * - Pauses when tab is hidden; respects prefers-reduced-motion
  * - Fully cleans up on unmount (no memory leaks)
  */
@@ -35,15 +37,18 @@ export default function Hero3D() {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
     mount.appendChild(renderer.domElement)
 
+    // ---------- Accent-aware colors ----------
+    const A = (ACCENTS[getActiveAccent()] || ACCENTS.violet).three
+
     // ---------- Lights ----------
-    const ambient = new THREE.AmbientLight(0x8b5cf6, 0.55)
+    const ambient = new THREE.AmbientLight(A.lights[0], 0.55)
     scene.add(ambient)
 
-    const point1 = new THREE.PointLight(0xa78bfa, 40, 60)
+    const point1 = new THREE.PointLight(A.lights[1], 40, 60)
     point1.position.set(8, 6, 8)
     scene.add(point1)
 
-    const point2 = new THREE.PointLight(0x6366f1, 30, 60)
+    const point2 = new THREE.PointLight(A.lights[2], 30, 60)
     point2.position.set(-10, -4, 6)
     scene.add(point2)
 
@@ -56,17 +61,19 @@ export default function Hero3D() {
       new THREE.TorusGeometry(1.1, 0.32, 14, 42),
       new THREE.DodecahedronGeometry(1.0, 0),
     ]
-    const palette = [0x8b5cf6, 0xa78bfa, 0x6366f1, 0x7c3aed, 0x818cf8]
+    const palette = A.palette
 
     geos.forEach((geo, i) => {
+      const colorIndex = i % palette.length
       const mat = new THREE.MeshStandardMaterial({
-        color: palette[i % palette.length],
+        color: palette[colorIndex],
         wireframe: true,
         transparent: true,
         opacity: 0.38,
-        emissive: palette[i % palette.length],
+        emissive: palette[colorIndex],
         emissiveIntensity: 0.35,
       })
+      mat.userData.colorIndex = colorIndex // used by accent recoloring
       const mesh = new THREE.Mesh(geo, mat)
 
       // Spread across the scene — more on the right so text stays readable
@@ -86,6 +93,22 @@ export default function Hero3D() {
       shapes.push(mesh)
     })
 
+    // Live recolor when the user switches accent (ThemeSwitcher event)
+    const applyAccent = (key) => {
+      const t = (ACCENTS[key] || ACCENTS.violet).three
+      ambient.color.set(t.lights[0])
+      point1.color.set(t.lights[1])
+      point2.color.set(t.lights[2])
+      shapes.forEach((s) => {
+        const c = t.palette[s.material.userData.colorIndex]
+        s.material.color.set(c)
+        s.material.emissive.set(c)
+      })
+      pMat.color.set(t.particle)
+    }
+    const onAccentChange = (e) => applyAccent(e.detail)
+    window.addEventListener('accentchange', onAccentChange)
+
     // ---------- Particle field ----------
     const COUNT = 900
     const positions = new Float32Array(COUNT * 3)
@@ -97,7 +120,7 @@ export default function Hero3D() {
     const pGeo = new THREE.BufferGeometry()
     pGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3))
     const pMat = new THREE.PointsMaterial({
-      color: 0xa78bfa,
+      color: A.particle,
       size: 0.055,
       transparent: true,
       opacity: 0.75,
@@ -168,6 +191,7 @@ export default function Hero3D() {
     // ---------- Cleanup ----------
     return () => {
       cancelAnimationFrame(rafId)
+      window.removeEventListener('accentchange', onAccentChange)
       window.removeEventListener('mousemove', onMouse)
       window.removeEventListener('resize', onResize)
       document.removeEventListener('visibilitychange', onVisibility)

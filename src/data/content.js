@@ -3,6 +3,18 @@
 //  Every value marked with ⚠️ PLACEHOLDER needs your real data.
 // ============================================================
 
+// ────────────────────────────────────────────────────────────
+//  CONTACT FORM — connect your free Formspree endpoint (3 min)
+//  1. Sign up at https://formspree.io  (free: 50 msgs/month)
+//  2. "New form" → name it "Portfolio" → copy the endpoint,
+//     e.g. https://formspree.io/f/xyzabcd
+//  3. Paste that FULL URL below — done, messages land in the
+//     inbox you registered with.
+//  ⚠️ PLACEHOLDER — while this is empty (''), the form shows a
+//  friendly "email me directly" fallback instead of sending.
+// ────────────────────────────────────────────────────────────
+export const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mrpbjkvp'
+
 export const profile = {
   name: 'Manish Gupta',
   firstName: 'Manish',
@@ -34,7 +46,7 @@ export const profile = {
 // e.g. https://github.com/<your-username> and https://linkedin.com/in/<your-username>
 export const socials = {
   github: 'https://github.com/MGMANISH001', // ⚠️ PLACEHOLDER
-  linkedin: 'https://www.linkedin.com/in/manish-gupta', // ⚠️ PLACEHOLDER
+  linkedin: 'https://www.linkedin.com/in/manish-gupta-mg', // ⚠️ PLACEHOLDER
   twitter: '', // optional — leave empty to hide
 }
 
