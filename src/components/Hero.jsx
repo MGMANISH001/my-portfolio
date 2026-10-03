@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import Hero3D from './Hero3D'
 import TypeWriter from './TypeWriter'
 import useMagnetic from '../hooks/useMagnetic'
@@ -28,10 +29,60 @@ function MagneticButton({ as: Comp = 'a', className, children, ...props }) {
   )
 }
 
-/** Hero — grid layout guarantees no overlap between heading and code card. */
+/** Hero — grid layout guarantees no overlap between heading and code card.
+ *  Scroll-zoom: as you scroll away, the copy scales down / fades / blurs
+ *  while the 3D canvas parallaxes slower — the trending "zoom-through" feel.
+ */
 export default function Hero() {
+  const heroRef = useRef(null)
+
+  useEffect(() => {
+    const hero = heroRef.current
+    if (!hero) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+    const inner = hero.querySelector('.hero-inner')
+    const canvas = hero.querySelector('.hero-canvas')
+    const overlay = hero.querySelector('.hero-grid-overlay')
+    const hint = hero.querySelector('.scroll-hint')
+    let raf = 0
+    let height = hero.offsetHeight
+
+    const onResize = () => {
+      height = hero.offsetHeight
+    }
+    const update = () => {
+      raf = 0
+      const y = window.scrollY
+      if (y > height * 1.2) return // hero is fully out of view
+      const p = Math.min(Math.max(y / (height * 0.85), 0), 1)
+      if (inner) {
+        inner.style.transform = `translate3d(0, ${(y * 0.14).toFixed(1)}px, 0) scale(${(1 - p * 0.13).toFixed(4)})`
+        inner.style.opacity = `${Math.max(1 - p * 1.1, 0).toFixed(3)}`
+        inner.style.filter = `blur(${(p * 6).toFixed(2)}px)`
+      }
+      if (canvas) {
+        canvas.style.transform = `translate3d(0, ${(y * 0.3).toFixed(1)}px, 0) scale(${(1 + p * 0.06).toFixed(4)})`
+      }
+      if (overlay) overlay.style.opacity = `${Math.max(1 - p * 0.85, 0).toFixed(3)}`
+      if (hint) hint.style.opacity = `${Math.max(1 - p * 3, 0).toFixed(3)}`
+    }
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update)
+    }
+
+    update()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onResize)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onResize)
+      if (raf) cancelAnimationFrame(raf)
+    }
+  }, [])
+
   return (
-    <section className="hero" id="home">
+    <section className="hero" id="home" ref={heroRef}>
       <Hero3D />
       <div className="hero-grid-overlay" />
 

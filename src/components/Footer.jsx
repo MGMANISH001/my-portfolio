@@ -37,6 +37,9 @@ export default function Footer() {
           </div>
         </div>
 
+        {/* Trending touch — giant faint watermark of the name */}
+        <div className="footer-watermark" aria-hidden="true">{profile.name}</div>
+
         <div className="footer-bottom">
           <span>© {year} {profile.name}. All rights reserved.</span>
           <span className="mono">

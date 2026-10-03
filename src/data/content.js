@@ -54,62 +54,83 @@ export const projects = [
   {
     title: 'Collaborative Coding Environment',
     description:
-      'A real-time collaborative platform that enables students to write, edit, and debug code together.',
+        'A real-time collaborative platform that enables students to write, edit, and debug code together.',
     tags: ['React', 'Tailwind', 'Django REST'],
-    // ⚠️ PLACEHOLDER — paste your repo + live demo URLs
-    github: 'https://github.com/manishgupta/collab-code', // ⚠️ PLACEHOLDER
-    demo: 'https://your-demo-link.vercel.app', // ⚠️ PLACEHOLDER
-    gradient: 'violet', // thumbnail style: violet | emerald | amber | rose | sky
+    github: '',   // ⚠️ paste repo URL after pushing the code to your GitHub
+    demo: '',     // leave '' if never deployed — no button will show
+    itch: '',     // games only
+    video: '',    // optional YouTube walkthrough / screen recording
+    download: '', // games only
+    gradient: 'violet',
     emoji: '👨‍💻',
+    details: {
+      overview:
+          'A real-time collaborative coding platform built as a college team project, made so students can work on the same code together instead of passing files back and forth.', // ⚠️ edit to match your build
+      role: 'My part: frontend UI, editor experience and API integration.', // ⚠️ edit
+      features: [ // ⚠️ edit to match what YOUR build actually does
+        'Shared coding rooms with live multi-user editing',
+        'Code editor with syntax highlighting',
+        'Run panel to execute and debug shared code',
+        'Room-based flow — create, share and join a session',
+      ],
+      outcome:
+          'Levelled up on syncing UI state across clients, designing a REST API with Django, and splitting work cleanly inside a team.', // ⚠️ edit
+    },
   },
   {
     title: '2D Multiplayer Game',
     description:
-      'A 2D offline multiplayer game focused on delivering smooth gameplay and engaging user interaction.',
+        'A 2D offline multiplayer game focused on delivering smooth gameplay and engaging user interaction.',
     tags: ['Unity', 'C#'],
-    github: 'https://github.com/manishgupta/2d-game', // ⚠️ PLACEHOLDER
-    demo: '', // leave empty → only GitHub button shows
+    github: '',   // optional — paste if you push the Unity project
+    demo: '',
+    video: '',    // ⚠️ RECOMMENDED: record gameplay (Win+G) → YouTube → paste link
+    download: '', // optional: GitHub Release page holding the .exe
     gradient: 'emerald',
     emoji: '🎮',
+    details: {
+      overview:
+          'A 2D multiplayer game built in Unity — my first deep dive into game development, focused on controls that feel tight and rounds that flow without friction.', // ⚠️ edit to match your game
+      role: 'My part: gameplay programming, UI and level design.', // ⚠️ edit
+      features: [ // ⚠️ edit to match YOUR game
+        'Local multiplayer with dedicated per-player controls',
+        'Physics-driven movement tuned for game feel',
+        'Round system with score, restart and pause flow',
+        'Custom 2D levels and sprite work',
+      ],
+      outcome:
+          'Learned the Unity editor workflow, C# gameplay scripting, and how small details — input timing, animation feel — completely change how a game plays.', // ⚠️ edit
+    },
   },
   {
     title: 'Movie Recommendation System',
     description: 'Developed and optimized recommendation algorithms for personalized content delivery.',
     tags: ['Python', 'Machine Learning', 'EDA'],
-    github: 'https://github.com/manishgupta/movie-rec', // ⚠️ PLACEHOLDER
+    github: '',   // ⚠️ paste repo URL after pushing the code (notebook + README)
     demo: '',
+    itch: '',
+    video: '',
+    download: '',
     gradient: 'amber',
     emoji: '🎬',
+    details: {
+      overview:
+          'A content-based movie recommendation engine built in Python — it suggests movies similar to the one you pick, using classic machine-learning techniques on a public dataset.', // ⚠️ edit
+      role: 'My part: data pipeline, similarity model and evaluation.', // ⚠️ edit
+      features: [ // ⚠️ edit to match YOUR notebook
+        'Content-based filtering on movie metadata',
+        'Text vectorization + cosine similarity engine',
+        'Exploratory data analysis of the dataset',
+        'Simple query flow — pick a movie, get ranked suggestions',
+      ],
+      outcome:
+          'Got comfortable with the full ML workflow — cleaning data, vectorizing text, computing similarity, and checking that recommendations actually make sense.', // ⚠️ edit
+    },
   },
-  // ---- Extra placeholder cards: edit or delete freely ----
-  {
-    title: 'DevFlow — Productivity Dashboard',
-    description: 'A drag-and-drop task board with rich keyboard shortcuts and offline-first sync.',
-    tags: ['React', 'IndexedDB', 'PWA'],
-    github: 'https://github.com/manishgupta/devflow', // ⚠️ PLACEHOLDER
-    demo: 'https://your-demo-link.vercel.app', // ⚠️ PLACEHOLDER
-    gradient: 'sky',
-    emoji: '⚡',
-  },
-  {
-    title: 'ShopSphere — E-commerce UI',
-    description: 'Pixel-perfect storefront with cart, filters, and buttery page transitions.',
-    tags: ['React', 'Tailwind', 'Framer'],
-    github: 'https://github.com/manishgupta/shopsphere', // ⚠️ PLACEHOLDER
-    demo: '',
-    gradient: 'rose',
-    emoji: '🛍️',
-  },
-  {
-    title: 'WeatherScope — Forecast App',
-    description: 'Beautiful weather dashboard with animated radar maps and 7-day insights.',
-    tags: ['JavaScript', 'REST API', 'Charts'],
-    github: 'https://github.com/manishgupta/weatherscope', // ⚠️ PLACEHOLDER
-    demo: '',
-    gradient: 'violet',
-    emoji: '🌦️',
-  },
+  // ── Add more cards here the same way. Only fill the links you have —
+  // ── everything else stays '' and renders nothing.
 ]
+
 
 export const skillGroups = [
   {
@@ -141,3 +162,71 @@ export const navLinks = [
   { label: 'About', href: '#about' },
   { label: 'Contact', href: '#contact' },
 ]
+
+// Scrolling tech strip shown right under the hero
+export const marqueeSkills = [
+  'React', 'JavaScript ES6+', 'Tailwind CSS', 'Three.js', 'TypeScript',
+  'Django REST', 'Vite', 'Git & GitHub', 'Figma', 'Responsive Design',
+]
+
+// "What I do" — the services you offer (4 cards)
+export const services = [
+  {
+    icon: '🌐',
+    title: 'Web App Development',
+    desc: 'Modern single-page applications with React — clean component architecture, real state management and APIs that just work.',
+    tags: ['React', 'REST APIs', 'State Management'],
+  },
+  {
+    icon: '🎨',
+    title: 'UI Engineering',
+    desc: 'Pixel-perfect interfaces with micro-interactions, motion and the kind of polish that makes a product feel premium.',
+    tags: ['Design Systems', 'Animations', 'Polish'],
+  },
+  {
+    icon: '📱',
+    title: 'Responsive Interfaces',
+    desc: 'Mobile-first layouts that adapt beautifully from a 360px phone to an ultrawide monitor — no breakpoints left behind.',
+    tags: ['Mobile-first', 'Flexbox & Grid', 'Cross-browser'],
+  },
+  {
+    icon: '⚡',
+    title: 'Performance & Accessibility',
+    desc: 'Fast-loading, keyboard-friendly and screen-reader-safe builds — optimized images, lazy loading and clean semantic HTML.',
+    tags: ['Core Web Vitals', 'a11y', 'SEO'],
+  },
+]
+
+// "My Journey" — Experience & Education timeline
+// ⚠️ PLACEHOLDER — replace college/company names + dates with yours
+export const timeline = [
+  {
+    period: '2021 — 2025',
+    type: 'Education',
+    title: 'B.E. — Computer Science',
+    org: 'Chandigarh University, India',
+    desc: 'Core CS fundamentals — data structures, algorithms, DBMS and networks — while building real projects on the side.',
+  },
+  {
+    period: '2024',
+    type: 'Offer',
+    title: 'Metaverse Intern',
+    org: 'Yuan Ze University, Taiwan',
+    desc: 'Internship focused on developing interactive, UI-driven applications and contributing to metaverse-based projects.',
+  },
+  {
+    period: '2024 — Present',
+    type: 'Experience',
+    title: 'Freelancer',
+    org: 'Self-employed',
+    desc: 'Working across frontend development, graphic design, and AI training, delivering responsive web experiences, creative designs, and AI-focused solutions.',
+  },
+  {
+    period: 'Ongoing',
+    type: 'Growth',
+    title: 'Backend & Cloud Development',
+    org: 'Continuous Learning',
+    desc: 'Currently studying backend development and AWS, focusing on APIs, databases, server-side development, cloud services, and building scalable full-stack applications.',
+  },
+]
+
