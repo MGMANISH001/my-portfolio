@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import Hero3D from './Hero3D'
 import TypeWriter from './TypeWriter'
+import RollText from './RollText'
 import useMagnetic from '../hooks/useMagnetic'
 import { profile, socials } from '../data/content'
 
@@ -93,10 +94,14 @@ export default function Hero() {
             {profile.availability}
           </span>
 
+          {/* Slot-machine roll on hover (see RollText). "Digital" uses the
+              stepped accent ramp — same flowing gradient look, but built
+              from plain colors so it never blanks in Safari inside the
+              overflow-hidden per-letter masks. It rolls to solid white. */}
           <h1 className="hero-title">
-            <span className="line">Crafting</span>
-            <span className="line grad-text">Digital</span>
-            <span className="line">Experiences</span>
+            <span className="line"><RollText text="Crafting" /></span>
+            <span className="line"><RollText text="Digital" ramp altWhite /></span>
+            <span className="line"><RollText text="Experiences" /></span>
           </h1>
 
           <p className="hero-sub">

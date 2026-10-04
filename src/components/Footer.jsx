@@ -1,4 +1,5 @@
 import { navLinks, profile, socials } from '../data/content'
+import RollText from './RollText'
 
 /**
  * Footer — FIX: the old site's footer was just an unfinished
@@ -14,7 +15,7 @@ export default function Footer() {
         <div className="footer-top">
           <div className="footer-brand">
             <a href="#home" className="nav-logo">
-              {profile.firstName}<span className="dot">.</span>dev
+              <RollText text={profile.firstName} /><span className="dot">.</span><RollText text="dev" />
             </a>
             <p>
               Frontend Developer building scalable, high-performance web

@@ -13,7 +13,7 @@
 //  ⚠️ PLACEHOLDER — while this is empty (''), the form shows a
 //  friendly "email me directly" fallback instead of sending.
 // ────────────────────────────────────────────────────────────
-export const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mrpbjkvp'
+export const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mrpbjkvp' // ✅ connected — messages land in itzmanish001@gmail.com
 
 export const profile = {
   name: 'Manish Gupta',
@@ -22,11 +22,10 @@ export const profile = {
   tagline: 'Crafting Digital Experiences',
   availability: 'Available for new projects',
 
-  // ⚠️ PLACEHOLDER — replace with your real email (appears in Contact + Footer)
   email: 'itzmanish001@gmail.com',
 
   location: 'India',
-  resumeUrl: '#', // ⚠️ PLACEHOLDER — put resume.pdf in /public and set to '/resume.pdf'
+  resumeUrl: '/resume.pdf', // ⚠️ PLACEHOLDER — put resume.pdf in /public and set to '/resume.pdf'
 
   // Short bio used in the About section (2–3 sentences works best)
   bio: `I'm a Frontend Developer who loves turning complex problems into clean, beautiful interfaces. I specialize in React, Tailwind CSS and modern JavaScript — building apps that are fast, accessible and delightful to use.`,
@@ -36,7 +35,7 @@ export const profile = {
   currentlyLearning: ['TypeScript', 'Next.js', 'Three.js', 'System Design'],
 
   stats: [
-    { value: 15, suffix: '+', label: 'Projects Built' },
+    { value: 10, suffix: '+', label: 'Projects Built' },
     { value: 1, suffix: '+', label: 'Years Experience' },
     { value: 500, suffix: '+', label: 'Commits This Year' },
   ],
@@ -45,123 +44,15 @@ export const profile = {
 // ⚠️ PLACEHOLDER — replace both URLs with YOUR profile links
 // e.g. https://github.com/<your-username> and https://linkedin.com/in/<your-username>
 export const socials = {
-  github: 'https://github.com/MGMANISH001', // ⚠️ PLACEHOLDER
-  linkedin: 'https://www.linkedin.com/in/manish-gupta-mg', // ⚠️ PLACEHOLDER
+  github: 'https://github.com/MGMANISH001',
+  linkedin: 'https://www.linkedin.com/in/manish-gupta',
   twitter: '', // optional — leave empty to hide
 }
 
-export const projects = [
-  {
-    title: 'Collaborative Coding Environment',
-    description:
-        'A real-time collaborative platform that enables students to write, edit, and debug code together.',
-    tags: ['React', 'Tailwind', 'Django REST'],
-    github: '',   // ⚠️ paste repo URL after pushing the code to your GitHub
-    demo: '',     // leave '' if never deployed — no button will show
-    itch: '',     // games only
-    video: '',    // optional YouTube walkthrough / screen recording
-    download: '', // games only
-    gradient: 'violet',
-    emoji: '👨‍💻',
-    details: {
-      overview:
-          'A real-time collaborative coding platform built as a college team project, made so students can work on the same code together instead of passing files back and forth.', // ⚠️ edit to match your build
-      role: 'My part: frontend UI, editor experience and API integration.', // ⚠️ edit
-      features: [ // ⚠️ edit to match what YOUR build actually does
-        'Shared coding rooms with live multi-user editing',
-        'Code editor with syntax highlighting',
-        'Run panel to execute and debug shared code',
-        'Room-based flow — create, share and join a session',
-      ],
-      outcome:
-          'Levelled up on syncing UI state across clients, designing a REST API with Django, and splitting work cleanly inside a team.', // ⚠️ edit
-    },
-  },
-  {
-    title: '2D Multiplayer Game',
-    description:
-        'A 2D offline multiplayer game focused on delivering smooth gameplay and engaging user interaction.',
-    tags: ['Unity', 'C#'],
-    github: '',   // optional — paste if you push the Unity project
-    demo: '',
-    video: '',    // ⚠️ RECOMMENDED: record gameplay (Win+G) → YouTube → paste link
-    download: '', // optional: GitHub Release page holding the .exe
-    gradient: 'emerald',
-    emoji: '🎮',
-    details: {
-      overview:
-          'A 2D multiplayer game built in Unity — my first deep dive into game development, focused on controls that feel tight and rounds that flow without friction.', // ⚠️ edit to match your game
-      role: 'My part: gameplay programming, UI and level design.', // ⚠️ edit
-      features: [ // ⚠️ edit to match YOUR game
-        'Local multiplayer with dedicated per-player controls',
-        'Physics-driven movement tuned for game feel',
-        'Round system with score, restart and pause flow',
-        'Custom 2D levels and sprite work',
-      ],
-      outcome:
-          'Learned the Unity editor workflow, C# gameplay scripting, and how small details — input timing, animation feel — completely change how a game plays.', // ⚠️ edit
-    },
-  },
-  {
-    title: 'Movie Recommendation System',
-    description: 'Developed and optimized recommendation algorithms for personalized content delivery.',
-    tags: ['Python', 'Machine Learning', 'EDA'],
-    github: '',   // ⚠️ paste repo URL after pushing the code (notebook + README)
-    demo: '',
-    itch: '',
-    video: '',
-    download: '',
-    gradient: 'amber',
-    emoji: '🎬',
-    details: {
-      overview:
-          'A content-based movie recommendation engine built in Python — it suggests movies similar to the one you pick, using classic machine-learning techniques on a public dataset.', // ⚠️ edit
-      role: 'My part: data pipeline, similarity model and evaluation.', // ⚠️ edit
-      features: [ // ⚠️ edit to match YOUR notebook
-        'Content-based filtering on movie metadata',
-        'Text vectorization + cosine similarity engine',
-        'Exploratory data analysis of the dataset',
-        'Simple query flow — pick a movie, get ranked suggestions',
-      ],
-      outcome:
-          'Got comfortable with the full ML workflow — cleaning data, vectorizing text, computing similarity, and checking that recommendations actually make sense.', // ⚠️ edit
-    },
-  },
-  // ── Add more cards here the same way. Only fill the links you have —
-  // ── everything else stays '' and renders nothing.
-]
-
-
-export const skillGroups = [
-  {
-    title: 'Frontend',
-    skills: [
-      { name: 'React', level: 90 },
-      { name: 'JavaScript (ES6+)', level: 88 },
-      { name: 'Tailwind CSS', level: 92 },
-      { name: 'HTML & CSS', level: 95 },
-    ],
-  },
-  {
-    title: 'Backend & Tools',
-    skills: [
-      { name: 'Django REST', level: 75 },
-      { name: 'Git & GitHub', level: 85 },
-      { name: 'Figma', level: 78 },
-      { name: 'Anime.js / GSAP', level: 70 },
-    ],
-  },
-]
-
-export const strengths = ['Problem Solving', 'Performance Optimization', 'Responsive Design', 'Clean Code']
-
-export const navLinks = [
-  { label: 'Home', href: '#home' },
-  { label: 'Projects', href: '#projects' },
-  { label: 'Skills', href: '#skills' },
-  { label: 'About', href: '#about' },
-  { label: 'Contact', href: '#contact' },
-]
+// ────────────────────────────────────────────────────────────
+//  MOTION UPGRADE — content for the new sections.
+//  ⚠️ PLACEHOLDER — edit the items below to tell YOUR story.
+// ────────────────────────────────────────────────────────────
 
 // Scrolling tech strip shown right under the hero
 export const marqueeSkills = [
@@ -197,14 +88,13 @@ export const services = [
   },
 ]
 
-// "My Journey" — Experience & Education timeline
-// ⚠️ PLACEHOLDER — replace college/company names + dates with yours
+// "My Journey" — Experience & Education timeline (newest last or first, your call)
 export const timeline = [
   {
-    period: '2021 — 2025',
+    period: '2021 — 2025', // ⚠️ PLACEHOLDER — your college years
     type: 'Education',
-    title: 'B.E. — Computer Science',
-    org: 'Chandigarh University, India',
+    title: 'B. E. — Computer Science',
+    org: 'Chandigarh University, India', // ⚠️ PLACEHOLDER
     desc: 'Core CS fundamentals — data structures, algorithms, DBMS and networks — while building real projects on the side.',
   },
   {
@@ -219,7 +109,7 @@ export const timeline = [
     type: 'Experience',
     title: 'Freelancer',
     org: 'Self-employed',
-    desc: 'Working across frontend development, graphic design, and AI training, delivering responsive web experiences, creative designs, and AI-focused solutions.',
+    desc: 'Working across frontend development, graphic design, and AI training — creating responsive web experiences, visual designs, and supporting AI model evaluation and training.',
   },
   {
     period: 'Ongoing',
@@ -230,3 +120,143 @@ export const timeline = [
   },
 ]
 
+// ────────────────────────────────────────────────────────────
+//  PROJECTS — honest-links edition.
+//  A button only appears if its URL is filled in. No fake links,
+//  no "Demo soon" filler — empty fields simply render nothing, and
+//  every card still has a full case study via the Details modal.
+//
+//  Where to paste what:
+//   github   → push your college code to github.com/MGMANISH001
+//              (rough code + a good README is 100% worth it), then
+//              paste the repo URL here.
+//   video    → record 30–60s of the project running (gameplay for
+//              the game — Win+G or OBS), upload to YouTube, paste
+//              the link. Works on every device, zero setup for the
+//              viewer. THE fix for the "exe won't run everywhere"
+//              problem.
+//   itch     → upload your game build to https://itch.io (free) and
+//              paste the game page URL. itch.io is the normal home
+//              for Windows-only indie games — nobody there expects
+//              a Mac version.
+//   download → (games, optional) create a GitHub Release, attach
+//              the .exe there, paste the release URL. NEVER link a
+//              raw .exe file directly — Chrome/SmartScreen flag it
+//              as dangerous and recruiters won't click it.
+//   demo     → only if you actually deploy a web project live.
+//  ⚠️ EDIT the details{} text of each project so it matches what
+//  YOUR build really does — every feature must be something you
+//  can talk through in an interview.
+// ────────────────────────────────────────────────────────────
+export const projects = [
+  {
+    title: 'Collaborative Coding Environment',
+    description:
+      'A real-time collaborative platform that enables students to write, edit, and debug code together.',
+    tags: ['React', 'Tailwind', 'Django REST'],
+    github: '',   // ⚠️ paste repo URL after pushing the code to your GitHub
+    demo: '',     // leave '' if never deployed — no button will show
+    itch: '',     // games only
+    video: '',    // optional YouTube walkthrough / screen recording
+    download: '', // games only
+    gradient: 'violet',
+    emoji: '👨‍💻',
+    details: {
+      overview:
+        'A real-time collaborative coding platform built as a college team project, made so students can work on the same code together instead of passing files back and forth.', // ⚠️ edit to match your build
+      role: 'My part: frontend UI, editor experience and API integration.', // ⚠️ edit
+      features: [ // ⚠️ edit to match what YOUR build actually does
+        'Shared coding rooms with live multi-user editing',
+        'Code editor with syntax highlighting',
+        'Run panel to execute and debug shared code',
+        'Room-based flow — create, share and join a session',
+      ],
+      outcome:
+        'Levelled up on syncing UI state across clients, designing a REST API with Django, and splitting work cleanly inside a team.', // ⚠️ edit
+    },
+  },
+  {
+    title: '2D Multiplayer Game',
+    description:
+      'A 2D offline multiplayer game focused on delivering smooth gameplay and engaging user interaction.',
+    tags: ['Unity', 'C#'],
+    github: '',   // optional — paste if you push the Unity project
+    demo: '',
+    itch: '',     // ⚠️ RECOMMENDED: upload the Windows build to itch.io, paste the page URL
+    video: '',    // ⚠️ RECOMMENDED: record gameplay (Win+G) → YouTube → paste link
+    download: '', // optional: GitHub Release page holding the .exe
+    gradient: 'emerald',
+    emoji: '🎮',
+    details: {
+      overview:
+        'A 2D multiplayer game built in Unity — my first deep dive into game development, focused on controls that feel tight and rounds that flow without friction.', // ⚠️ edit to match your game
+      role: 'My part: gameplay programming, UI and level design.', // ⚠️ edit
+      features: [ // ⚠️ edit to match YOUR game
+        'Local multiplayer with dedicated per-player controls',
+        'Physics-driven movement tuned for game feel',
+        'Round system with score, restart and pause flow',
+        'Custom 2D levels and sprite work',
+      ],
+      outcome:
+        'Learned the Unity editor workflow, C# gameplay scripting, and how small details — input timing, animation feel — completely change how a game plays.', // ⚠️ edit
+    },
+  },
+  {
+    title: 'Movie Recommendation System',
+    description: 'Developed and optimized recommendation algorithms for personalized content delivery.',
+    tags: ['Python', 'Machine Learning', 'EDA'],
+    github: '',   // ⚠️ paste repo URL after pushing the code (notebook + README)
+    demo: '',
+    itch: '',
+    video: '',
+    download: '',
+    gradient: 'amber',
+    emoji: '🎬',
+    details: {
+      overview:
+        'A content-based movie recommendation engine built in Python — it suggests movies similar to the one you pick, using classic machine-learning techniques on a public dataset.', // ⚠️ edit
+      role: 'My part: data pipeline, similarity model and evaluation.', // ⚠️ edit
+      features: [ // ⚠️ edit to match YOUR notebook
+        'Content-based filtering on movie metadata',
+        'Text vectorization + cosine similarity engine',
+        'Exploratory data analysis of the dataset',
+        'Simple query flow — pick a movie, get ranked suggestions',
+      ],
+      outcome:
+        'Got comfortable with the full ML workflow — cleaning data, vectorizing text, computing similarity, and checking that recommendations actually make sense.', // ⚠️ edit
+    },
+  },
+  // ── Add more cards here the same way. Only fill the links you have —
+  // ── everything else stays '' and renders nothing.
+]
+
+export const skillGroups = [
+  {
+    title: 'Frontend',
+    skills: [
+      { name: 'React', level: 90 },
+      { name: 'JavaScript (ES6+)', level: 88 },
+      { name: 'Tailwind CSS', level: 92 },
+      { name: 'HTML & CSS', level: 95 },
+    ],
+  },
+  {
+    title: 'Backend & Tools',
+    skills: [
+      { name: 'Django REST', level: 75 },
+      { name: 'Git & GitHub', level: 85 },
+      { name: 'Figma', level: 78 },
+      { name: 'Anime.js / GSAP', level: 70 },
+    ],
+  },
+]
+
+export const strengths = ['Problem Solving', 'Performance Optimization', 'Responsive Design', 'Clean Code']
+
+export const navLinks = [
+  { label: 'Home', href: '#home' },
+  { label: 'Projects', href: '#projects' },
+  { label: 'Skills', href: '#skills' },
+  { label: 'About', href: '#about' },
+  { label: 'Contact', href: '#contact' },
+]

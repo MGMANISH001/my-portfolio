@@ -1,6 +1,7 @@
 import Navbar from './components/Navbar'
 import ScrollProgress from './components/ScrollProgress'
 import CursorGlow from './components/CursorGlow'
+import CustomCursor from './components/CustomCursor'
 import BackToTop from './components/BackToTop'
 import TechMarquee from './components/TechMarquee'
 import Hero from './components/Hero'
@@ -27,6 +28,7 @@ export default function App() {
       <Navbar />
       <ScrollProgress />
       <CursorGlow />
+      <CustomCursor />
       <main>
         <Hero />
         <TechMarquee />

@@ -65,9 +65,6 @@ function ProjectCard({ project, onDetails }) {
     const px = (e.clientX - rect.left) / rect.width - 0.5
     const py = (e.clientY - rect.top) / rect.height - 0.5
     el.style.transform = `rotateY(${px * 10}deg) rotateX(${-py * 10}deg) translateY(-6px)`
-    // glare follows the cursor (position fed to CSS as --gx / --gy)
-    el.style.setProperty('--gx', `${(((e.clientX - rect.left) / rect.width) * 100).toFixed(1)}%`)
-    el.style.setProperty('--gy', `${(((e.clientY - rect.top) / rect.height) * 100).toFixed(1)}%`)
   }
   const onLeave = () => {
     const el = cardRef.current
@@ -109,8 +106,6 @@ function ProjectCard({ project, onDetails }) {
             <InfoIcon /> Details
           </button>
         </div>
-        {/* glare — light sweep that follows the cursor */}
-        <span className="project-glare" aria-hidden="true" />
       </div>
     </article>
   )

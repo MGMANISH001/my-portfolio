@@ -731,7 +731,7 @@ section { position: relative; padding: 110px 0; }
   padding: 13px 16px;
   color: var(--text);
   font-family: var(--font-body), sans-serif;
-  font-size: 0.92rem;
+  font-size: 1rem; /* 16px — below this iOS Safari auto-zooms on focus */
   outline: none;
   transition: border-color 0.25s ease, box-shadow 0.25s ease;
   resize: vertical;
@@ -826,7 +826,8 @@ section { position: relative; padding: 110px 0; }
   section { padding: 80px 0; }
   .nav-links, .nav .nav-cta { display: none; }
   .nav-burger { display: flex; }
-  .projects-grid { grid-template-columns: 1fr; }
+  /* projects stay 2-col down to 641px — full-width cards at tablet
+     width looked oversized (versatility fix, Task 8) */
   .hero-title { font-size: clamp(2.3rem, 10vw, 3.2rem); }
   .scroll-hint { display: none; }
   .about-float { display: none; }
@@ -908,7 +909,12 @@ section { position: relative; padding: 110px 0; }
   pointer-events: none;
 }
 
-/* Cursor spotlight (desktop / fine pointer only) */
+/* Cursor spotlight (desktop / fine pointer only)
+   Paints BEHIND all content (z-index: -1, above only the body
+   canvas background — html must never get its own background or
+   propagation breaks). Opaque surfaces (project/skill/timeline
+   cards, form inputs, footer, modal) fully cover it, so it lights
+   the page background AROUND them instead of washing them out. */
 .cursor-glow {
   position: fixed;
   top: 0; left: 0;
@@ -922,7 +928,7 @@ section { position: relative; padding: 110px 0; }
   );
   mix-blend-mode: screen;
   pointer-events: none;
-  z-index: 1500;
+  z-index: -1;
   opacity: 0;
   transition: opacity 0.4s ease;
   will-change: transform;
@@ -1045,7 +1051,7 @@ section { position: relative; padding: 110px 0; }
 }
 .timeline-rail-fill {
   width: 100%;
-  height: 0;
+  height: 0; /* grows via JS as you scroll through the section */
   background: linear-gradient(180deg, var(--accent), var(--accent-2), var(--accent-3));
   box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.6);
 }
@@ -1113,23 +1119,9 @@ section { position: relative; padding: 110px 0; }
 }
 .btn-primary:hover::after { left: 135%; }
 
-/* Project card glare (position fed from JS via --gx / --gy) */
-.project-glare {
-    --gx: 50%;
-    --gy: 50%;
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    420px circle at var(--gx, 50%) var(--gy, 50%),
-    rgba(255, 255, 255, 0.14),
-    transparent 45%
-  );
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-  z-index: 3;
-}
-.project-card:hover .project-glare { opacity: 1; }
+/* NOTE: the per-card cursor glare (white 420px radial that followed the
+   mouse inside each card) was REMOVED per user feedback — it read as the
+   card "whitening" on hover. Cards keep the 3D tilt + edge halo instead. */
 
 /* Footer giant watermark */
 .footer-watermark {
@@ -1152,6 +1144,11 @@ section { position: relative; padding: 110px 0; }
 }
 @media (max-width: 640px) {
   .services-grid { grid-template-columns: 1fr; }
+  /* single-column project cards only on phones — trim thumb + drop
+     the 3-col alignment min-height so short cards don't pad out */
+  .projects-grid { grid-template-columns: 1fr; }
+  .project-thumb { height: 148px; }
+  .project-desc { min-height: 0; }
   .timeline { padding-left: 38px; }
   .timeline-rail { left: 7px; }
   .tl-dot { left: -36px; width: 12px; height: 12px; top: 9px; }
@@ -1167,7 +1164,6 @@ section { position: relative; padding: 110px 0; }
   .scroll-progress { transition: none; }
   .back-to-top { transition: none; }
   .btn-primary::after { display: none; }
-  .project-glare { display: none; }
   .pm-overlay, .pm-panel { animation: none; }
 }
 
@@ -1292,4 +1288,111 @@ section { position: relative; padding: 110px 0; }
   .pm-panel { max-height: 88vh; }
   .pm-body { padding: 20px 18px 22px; }
 }
+
+/* ============================================================
+   ROLL TEXT (Task 9) — per-character "slot machine" hover roll
+   Each glyph sits in an overflow-hidden mask with a duplicate
+   copy hidden below it; hover rolls both upward, staggered
+   left-to-right via the per-char --i custom property.
+   ============================================================ */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.roll { display: inline-block; }
+.roll-vis { display: inline; }
+.roll-sp { display: inline-block; white-space: pre; }
+
+.roll-char {
+  /* declared default — the real value is set per char via inline style
+     (same WebStorm rule as --gx/--gy: JS-set vars need a CSS declaration) */
+  --i: 0;
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  line-height: 1.2;
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
+  vertical-align: bottom;
+}
+.roll-copy {
+  display: block;
+  will-change: transform;
+  transition: transform 0.55s cubic-bezier(0.7, 0, 0.2, 1);
+  /* same delay in both directions → the roll cascades L→R on enter AND leave */
+  transition-delay: calc(var(--i) * 24ms);
+}
+.roll { --roll-alt: var(--accent-2); }
+.roll-alt-white { --roll-alt: #ffffff; }
+.roll-b {
+  position: absolute;
+  inset: 0;
+  color: var(--roll-alt);
+  transform: translateY(108%);
+}
+@media (hover: hover) and (pointer: fine) {
+  .roll:hover .roll-a { transform: translateY(-108%); }
+  .roll:hover .roll-b { transform: translateY(0); }
+}
+
+/* "Digital" — stepped accent ramp replacing the old bg-clip gradient
+   (plain color-mix stops are Safari-proof inside the overflow-hidden
+   masks and still follow the 5-color theme switcher).
+   No fallback color declared: color-mix() is Baseline 2023, supported
+   by every evergreen browser since mid-2023 — a duplicate `color:`
+   line triggered WebStorm "property overwritten" commit warnings, and
+   on pre-2023 browsers the declaration simply drops and letters
+   inherit the tagline color (graceful flat-color degradation). */
+.roll-char.rc-0 .roll-a { color: var(--accent-2); }
+.roll-char.rc-1 .roll-a { color: color-mix(in oklab, var(--accent-2) 82%, var(--accent) 18%); }
+.roll-char.rc-2 .roll-a { color: color-mix(in oklab, var(--accent-2) 62%, var(--accent) 38%); }
+.roll-char.rc-3 .roll-a { color: color-mix(in oklab, var(--accent-2) 40%, var(--accent) 60%); }
+.roll-char.rc-4 .roll-a { color: color-mix(in oklab, var(--accent) 72%, var(--accent-3) 28%); }
+.roll-char.rc-5 .roll-a { color: color-mix(in oklab, var(--accent) 45%, var(--accent-3) 55%); }
+.roll-char.rc-6 .roll-a { color: var(--accent-3); }
+
+/* ============================================================
+   CUSTOM CURSOR (Task 9) — single-ring cursor replacing the
+   native one on fine-pointer devices. Follows the pointer 1:1
+   (no dot, no trailing shadow — user preference), expands and
+   tints with the accent color over interactive elements.
+   ============================================================ */
+html.has-cursor,
+html.has-cursor * { cursor: none !important; }
+html.has-cursor input,
+html.has-cursor textarea { caret-color: var(--accent-2); }
+
+.cursor-ring {
+  position: fixed;
+  top: 0; left: 0;
+  width: 34px; height: 34px;
+  margin: -17px 0 0 -17px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(236, 234, 246, 0.75);
+  box-shadow: 0 0 14px rgba(var(--accent-rgb), 0.35);
+  z-index: 4999;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease, border-color 0.25s ease, background-color 0.25s ease;
+  will-change: transform;
+}
+.cursor-ring.on { opacity: 1; }
+.cursor-ring.is-link {
+  border-color: rgba(var(--accent-rgb), 0.95);
+  background-color: rgba(var(--accent-rgb), 0.12);
+}
+.cursor-ring.is-down { border-color: rgba(var(--accent-rgb), 0.95); }
+
+/* Touch devices never see the custom cursor; the JS also guards,
+   but CSS keeps it belt-and-suspenders. */
+@media (hover: none), (pointer: coarse) {
+  .cursor-ring { display: none !important; }
+}
+
 

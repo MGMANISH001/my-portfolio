@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { navLinks, profile } from '../data/content'
 import ThemeSwitcher from './ThemeSwitcher'
+import RollText from './RollText'
 
 /**
  * Navbar — FIXES:
@@ -40,10 +41,17 @@ export default function Navbar() {
     return () => io.disconnect()
   }, [])
 
-  // Lock body scroll when mobile menu is open
+  // Lock body scroll when mobile menu is open + close on Escape
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : ''
     return () => (document.body.style.overflow = '')
+  }, [open])
+
+  useEffect(() => {
+    if (!open) return
+    const onKey = (e) => { if (e.key === 'Escape') setOpen(false) }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
   }, [open])
 
   const closeMenu = () => setOpen(false)
@@ -53,7 +61,7 @@ export default function Navbar() {
       <header className={`nav ${scrolled ? 'scrolled' : ''}`}>
         <div className="container nav-inner">
           <a href="#home" className="nav-logo" onClick={closeMenu}>
-            {profile.firstName}<span className="dot">.</span>dev
+            <RollText text={profile.firstName} /><span className="dot">.</span><RollText text="dev" />
           </a>
 
           <nav aria-label="Primary">
@@ -64,7 +72,7 @@ export default function Navbar() {
                     href={link.href}
                     className={`nav-link ${active === link.href.slice(1) ? 'active' : ''}`}
                   >
-                    {link.label}
+                    <RollText text={link.label} />
                   </a>
                 </li>
               ))}
