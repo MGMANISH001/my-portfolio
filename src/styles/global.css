@@ -1034,6 +1034,82 @@ section { position: relative; padding: 110px 0; }
 .service-card p { color: var(--text-muted); font-size: 0.88rem; line-height: 1.65; margin-bottom: 16px; }
 .service-tags { display: flex; flex-wrap: wrap; gap: 8px; }
 
+/* ============================================================
+   SERVICES v2 — one-by-one drop-in + creative details
+   (cascade overrides the block above; no light-wash effects)
+   ============================================================ */
+/* springy drop from ABOVE, one card at a time — keyframes own the reveal
+   because .service-card's hover `transition` shorthand would otherwise
+   override .reveal's transition-delay and collapse the stagger to 0.
+   fill-mode backwards: during the delay the card holds the hidden
+   from-state, then drops in; after the run, transform is free for hover. */
+.service-card.reveal.drop {
+  --drop-dist: -56px; /* JS-free knob; phones shrink it below */
+  transform: translateY(var(--drop-dist));
+}
+.service-card.reveal.drop.visible {
+  opacity: 1;
+  transform: none;
+  animation: cardDrop 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+  animation-delay: var(--reveal-delay, 0s);
+}
+@keyframes cardDrop {
+  from { opacity: 0; transform: translateY(var(--drop-dist, -56px)) scale(0.96); }
+  55%  { opacity: 1; }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* mono card counter — faint at rest, accent on hover */
+.service-num {
+  position: absolute;
+  top: 16px; right: 18px;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  color: var(--text-faint);
+  transition: color 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+.service-card:hover .service-num {
+  color: var(--accent-2);
+  transform: translateY(2px);
+}
+
+/* accent top bar sweeps in from the left on hover */
+.service-card::before {
+  content: '';
+  position: absolute;
+  top: -1px; left: 14px; right: 14px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--gradient);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.45s cubic-bezier(0.7, 0, 0.2, 1);
+  pointer-events: none;
+}
+.service-card:hover::before { transform: scaleX(1); }
+
+/* icon pops in AFTER its card lands — fill-mode backwards keeps the
+   from-state during the delay, then releases transform to hover rules */
+.reveal.visible .service-icon {
+  animation: serviceIconPop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+  animation-delay: calc(var(--reveal-delay, 0s) + 0.55s);
+}
+@keyframes serviceIconPop {
+  from { transform: scale(0) rotate(-24deg); }
+  to   { transform: scale(1) rotate(0deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .service-card.reveal.drop { transform: none; }
+  .service-card.reveal.drop.visible { animation-delay: 0s; }
+  .reveal.visible .service-icon { animation: none; }
+}
+@media (max-width: 640px) {
+  .service-card.reveal.drop { --drop-dist: -34px; }
+}
+
 /* Timeline — Experience & Education (scroll-filling rail) */
 .timeline {
   position: relative;

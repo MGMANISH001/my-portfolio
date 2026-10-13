@@ -18,7 +18,7 @@ export const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mrpbjkvp' // ✅ conne
 export const profile = {
   name: 'Manish Gupta',
   firstName: 'Manish',
-  role: 'Frontend Developer',
+  role: 'Fullstack Developer',
   tagline: 'Crafting Digital Experiences',
   availability: 'Available for new projects',
 
@@ -57,7 +57,7 @@ export const socials = {
 // Scrolling tech strip shown right under the hero
 export const marqueeSkills = [
   'React', 'JavaScript ES6+', 'Tailwind CSS', 'Three.js', 'TypeScript',
-  'Django REST', 'Vite', 'Git & GitHub', 'Figma', 'Responsive Design',
+  'Django REST', 'Vite', 'Git & GitHub', 'Figma', 'Responsive Design', 'HTML CSS',
 ]
 
 // "What I do" — the services you offer (4 cards)
@@ -149,6 +149,35 @@ export const timeline = [
 //  can talk through in an interview.
 // ────────────────────────────────────────────────────────────
 export const projects = [
+  {
+    title: 'FORMA3D — 3D Product Configurator',
+    description:
+        'A monochrome design-it-yourself storefront — configure furniture in real-time 3D while Django REST re-prices every change live.',
+    tags: ['Three.js', 'Django REST', 'Vanilla JS'],
+    github: '',   // optional — push the code later if you open-source it
+    demo: 'https://manishgupta.pythonanywhere.com/',
+    itch: '',
+    video: '',
+    download: '',
+    gradient: 'sky',
+    emoji: '🛋️',
+    details: {
+      overview:
+          'FORMA3D is a design-it-yourself furniture storefront: every product is a real-time 3D model generated in code with Three.js — rotate, zoom and re-color it live in the browser, and the price recomputes with every choice. A strict monochrome design system (paper-white day, true-black night) keeps the products front and center.',
+      role: 'My part: everything — 3D scene programming, storefront UI, Django REST pricing backend and deployment.',
+      features: [
+        'Real-time 3D configurator — 8 products, 90+ finishes, orbit / zoom / re-color with physically-based materials',
+        'Server-verified pricing: a Django REST endpoint recomputes every quote straight from the database',
+        'Per-part configuration (shell, cushion, finish, laser engraving) carried all the way to checkout',
+        'Zero frameworks: hand-written design system, readable vanilla JS, no build step',
+        'Dual monochrome themes with no flash on load and reduced-motion respected',
+        'Mobile-first: touch orbit controls, sticky purchase bar and skeleton loading states',
+      ],
+      outcome:
+          'Learned to hand-roll a Three.js product pipeline without frameworks, design a pricing API the client can never lie to, and tune a WebGL storefront for phones at 390px and desktops at 1440px.',
+    },
+  },
+
   {
     title: 'Collaborative Coding Environment',
     description:

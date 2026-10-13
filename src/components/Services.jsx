@@ -3,7 +3,8 @@ import { services } from '../data/content'
 
 /**
  * Services — "What I do" grid: the four kinds of work Manish takes on.
- * Cards reveal with a stagger; hover lifts + accent glow (CSS only).
+ * Cards drop in ONE BY ONE (staggered springy drop from above, icon pops
+ * after each card lands); hover lifts with an accent top-bar sweep.
  * Copy lives in src/data/content.js → services[]
  */
 export default function Services() {
@@ -23,10 +24,11 @@ export default function Services() {
         <div className="services-grid">
           {services.map((service, i) => (
             <div
-              className="service-card reveal"
+              className="service-card reveal drop"
               key={service.title}
-              style={{ '--reveal-delay': `${i * 0.1}s` }}
+              style={{ '--reveal-delay': `${i * 0.14}s` }}
             >
+              <span className="service-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
               <span className="service-icon" aria-hidden="true">{service.icon}</span>
               <h3>{service.title}</h3>
               <p>{service.desc}</p>
